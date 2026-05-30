@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Konfirmasi Pesanan - PO. Akas</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1c1c19",
+                        "surface-container-highest": "#e5e2dd",
+                        "tertiary": "#683c0a",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c2c6d2",
+                        "surface-tint": "#1960a6",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fcf9f3",
+                        "secondary-fixed": "#bef19a",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "surface-container-low": "#f6f3ee",
+                        "on-primary-fixed-variant": "#004883",
+                        "secondary-fixed-dim": "#a3d480",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001c39",
+                        "on-secondary-container": "#426d26",
+                        "surface-dim": "#dcdad4",
+                        "on-secondary-fixed": "#0a2100",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#683c0a",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface-container-high": "#ebe8e2",
+                        "on-surface-variant": "#424751",
+                        "surface": "#fcf9f3",
+                        "primary": "#004782",
+                        "tertiary-fixed-dim": "#fab97e",
+                        "primary-container": "#185fa5",
+                        "surface-container": "#f1ede8",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#2d1600",
+                        "outline": "#727782",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#31302d",
+                        "secondary-container": "#bbee97",
+                        "background": "#fcf9f3",
+                        "on-tertiary-container": "#ffcea5",
+                        "on-secondary-fixed-variant": "#27500a",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#a4c9ff",
+                        "surface-variant": "#e5e2dd",
+                        "inverse-on-surface": "#f3f0eb",
+                        "primary-fixed": "#d4e3ff",
+                        "on-primary-container": "#c1d9ff",
+                        "on-background": "#1c1c19",
+                        "tertiary-container": "#845321",
+                        "secondary": "#3e6922"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "xs": "4px",
+                        "container-max": "1200px",
+                        "xl": "64px",
+                        "base": "8px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "body": ["Work Sans"],
+                        "label-form": ["Work Sans"],
+                        "h2": ["Work Sans"],
+                        "h1-mobile": ["Work Sans"],
+                        "h3": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "h1": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "body": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-form": ["14px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "h1-mobile": ["26px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "caption": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body font-body text-body antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared Component: TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim font-body text-body docked full-width top-0 border-b border-outline-variant dark:border-outline shadow-sm sticky z-50">
+<div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-xl">
+<!-- Brand -->
+<div class="flex items-center gap-base">
+<span class="text-h2 font-h2 text-primary dark:text-primary-fixed-dim">PO. Akas</span>
+</div>
+<!-- Navigation Links (Hidden on Mobile) -->
+<nav class="hidden md:flex items-center gap-md">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors px-base py-xs rounded-DEFAULT" href="#">Beranda</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors px-base py-xs rounded-DEFAULT" href="#">Jadwal</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors px-base py-xs rounded-DEFAULT" href="#">Tentang Kami</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors px-base py-xs rounded-DEFAULT" href="#">Kontak</a>
+</nav>
+<!-- Actions -->
+<div class="hidden md:flex items-center gap-sm">
+<button class="text-primary dark:text-primary-fixed-dim font-label-form text-label-form px-sm py-xs rounded-DEFAULT border border-transparent hover:border-primary transition-colors">Masuk</button>
+<button class="bg-primary-container text-on-primary-container font-label-form text-label-form px-sm py-xs rounded-DEFAULT hover:bg-primary hover:text-on-primary transition-colors">Daftar</button>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-container-max mx-auto px-gutter py-lg min-h-screen">
+<!-- Header & Stepper -->
+<div class="mb-lg">
+<h1 class="font-h1 text-h1 text-primary hidden md:block mb-md">Konfirmasi Pesanan</h1>
+<h1 class="font-h1-mobile text-h1-mobile text-primary md:hidden mb-md">Konfirmasi Pesanan</h1>
+<!-- Step Indicators -->
+<div class="flex items-center gap-sm">
+<div class="flex items-center gap-base">
+<div class="w-sm h-sm rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-form text-label-form text-primary hidden md:inline">Pilih Jadwal</span>
+</div>
+<div class="h-[2px] w-md bg-primary"></div>
+<div class="flex items-center gap-base">
+<div class="w-sm h-sm rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<span class="font-label-form text-label-form text-primary hidden md:inline">Isi Data</span>
+</div>
+<div class="h-[2px] w-md bg-primary"></div>
+<div class="flex items-center gap-base">
+<div class="w-sm h-sm rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-form text-label-form">3</div>
+<span class="font-label-form text-label-form text-primary-container font-semibold">Konfirmasi</span>
+</div>
+</div>
+</div>
+<!-- Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-md items-start">
+<!-- Left Column: Details -->
+<div class="col-span-1 md:col-span-8 flex flex-col gap-md">
+<!-- Timer Banner -->
+<div class="bg-error-container text-on-error-container rounded-lg p-sm flex items-center gap-sm shadow-sm">
+<span class="material-symbols-outlined icon-fill">timer</span>
+<div>
+<p class="font-label-form text-label-form font-semibold">Selesaikan pembayaran dalam waktu <span class="font-h3 text-h3 ml-xs" id="countdown-timer">30:00</span></p>
+<p class="font-caption text-caption">Pesanan akan dibatalkan otomatis jika batas waktu berakhir.</p>
+</div>
+</div>
+<!-- Journey Summary Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md">
+<div class="flex justify-between items-start mb-md">
+<h2 class="font-h3 text-h3 text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined">directions_bus</span>
+                            Ringkasan Perjalanan
+                        </h2>
+<span class="bg-surface-container text-on-surface-variant font-caption text-caption px-sm py-xs rounded-DEFAULT">Executive Class</span>
+</div>
+<div class="relative pl-md border-l-2 border-dashed border-outline-variant ml-sm space-y-md">
+<!-- Origin -->
+<div class="relative">
+<div class="absolute -left-[29px] top-xs w-[14px] h-[14px] bg-surface-container-lowest border-2 border-primary rounded-full"></div>
+<p class="font-caption text-caption text-on-surface-variant">Senin, 24 Okt 2024 • 08:00 WIB</p>
+<p class="font-h3 text-h3 text-on-surface">Probolinggo</p>
+<p class="font-caption text-caption text-on-surface-variant">Terminal Bayuangga</p>
+</div>
+<!-- Duration -->
+<div class="flex items-center gap-xs text-on-surface-variant font-caption text-caption py-xs">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span>2j 30m Perjalanan</span>
+</div>
+<!-- Destination -->
+<div class="relative">
+<div class="absolute -left-[29px] top-xs w-[14px] h-[14px] bg-primary rounded-full"></div>
+<p class="font-caption text-caption text-on-surface-variant">Senin, 24 Okt 2024 • 10:30 WIB</p>
+<p class="font-h3 text-h3 text-on-surface">Surabaya</p>
+<p class="font-caption text-caption text-on-surface-variant">Terminal Purabaya (Bungurasih)</p>
+</div>
+</div>
+</div>
+<!-- Passenger Details Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md">
+<h2 class="font-h3 text-h3 text-primary mb-md flex items-center gap-xs">
+<span class="material-symbols-outlined">group</span>
+                        Daftar Penumpang
+                    </h2>
+<div class="space-y-sm">
+<!-- Passenger 1 -->
+<div class="flex justify-between items-center p-sm bg-surface rounded-lg border border-surface-container-highest">
+<div class="flex items-center gap-sm">
+<div class="w-[40px] h-[40px] rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="font-label-form text-label-form text-on-surface">Budi Santoso</p>
+<p class="font-caption text-caption text-on-surface-variant">Dewasa • KTP: 3513xxxxxxxxxxxx</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-caption text-caption text-on-surface-variant">Nomor Kursi</p>
+<p class="font-h3 text-h3 text-primary-container">3A</p>
+</div>
+</div>
+<!-- Passenger 2 -->
+<div class="flex justify-between items-center p-sm bg-surface rounded-lg border border-surface-container-highest">
+<div class="flex items-center gap-sm">
+<div class="w-[40px] h-[40px] rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div>
+<p class="font-label-form text-label-form text-on-surface">Siti Aminah</p>
+<p class="font-caption text-caption text-on-surface-variant">Dewasa • KTP: 3513xxxxxxxxxxxx</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-caption text-caption text-on-surface-variant">Nomor Kursi</p>
+<p class="font-h3 text-h3 text-primary-container">3B</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Price & Action -->
+<div class="col-span-1 md:col-span-4 sticky top-xl flex flex-col gap-md">
+<!-- Price Breakdown Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md flex flex-col gap-sm">
+<h2 class="font-h3 text-h3 text-primary mb-xs">Rincian Harga</h2>
+<div class="flex justify-between items-center font-body text-body text-on-surface">
+<span>Tiket (2x Dewasa)</span>
+<span>Rp 120.000</span>
+</div>
+<div class="flex justify-between items-center font-body text-body text-on-surface">
+<span>Biaya Layanan</span>
+<span>Rp 5.000</span>
+</div>
+<div class="h-[1px] w-full bg-surface-container-highest my-xs"></div>
+<div class="flex justify-between items-end">
+<span class="font-label-form text-label-form text-on-surface-variant">Total Pembayaran</span>
+<span class="font-h2 text-h2 text-primary">Rp 125.000</span>
+</div>
+</div>
+<!-- Terms & Action -->
+<div class="flex flex-col gap-sm">
+<label class="flex items-start gap-xs cursor-pointer group">
+<input class="mt-xs text-primary-container rounded border-outline-variant focus:ring-primary-container" id="tnc-checkbox" type="checkbox"/>
+<span class="font-caption text-caption text-on-surface-variant group-hover:text-on-surface transition-colors">
+                            Saya menyetujui <a class="text-primary-container underline" href="#">Syarat &amp; Ketentuan</a> serta <a class="text-primary-container underline" href="#">Kebijakan Privasi</a> yang berlaku untuk perjalanan ini.
+                        </span>
+</label>
+<button class="w-full bg-primary-container text-on-primary-container font-h3 text-h3 py-sm rounded-lg transition-all duration-200 opacity-50 cursor-not-allowed hover:bg-primary shadow-sm flex items-center justify-center gap-xs" disabled="" id="pay-button">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+                        Bayar Sekarang
+                    </button>
+</div>
+<!-- Security Trust Badge -->
+<div class="flex items-center justify-center gap-xs text-on-surface-variant opacity-80 mt-xs">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span class="font-caption text-caption">Pembayaran Aman &amp; Terenkripsi</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Shared Component: Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-dim font-body text-body full-width bg-surface-container dark:bg-surface-container-high flat no shadows mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg py-xl px-gutter max-w-container-max mx-auto">
+<!-- Brand & Copyright -->
+<div class="col-span-1 md:col-span-2 flex flex-col gap-sm">
+<span class="text-h3 font-h3 text-primary dark:text-primary-fixed-dim">PO. Akas</span>
+<p class="text-on-surface-variant dark:text-on-surface-variant font-caption text-caption max-w-[300px]">Melayani perjalanan darat Anda dengan aman, nyaman, dan terpercaya. Komitmen kami adalah ketepatan waktu dan keselamatan penumpang.</p>
+<p class="text-on-surface-variant dark:text-on-surface-variant font-caption text-caption mt-auto">© 2024 PO. Akas. All rights reserved.</p>
+</div>
+<!-- Links Column -->
+<div class="col-span-1 flex flex-col gap-base">
+<h4 class="font-label-form text-label-form font-semibold text-on-surface">Menu Utama</h4>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Beranda</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Jadwal</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Tentang Kami</a>
+</div>
+<!-- Links Column -->
+<div class="col-span-1 flex flex-col gap-base">
+<h4 class="font-label-form text-label-form font-semibold text-on-surface">Bantuan</h4>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Kontak</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Syarat &amp; Ketentuan</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Kebijakan Privasi</a>
+</div>
+</div>
+</footer>
+<!-- Interactive Scripts -->
+<script>
+        // Checkbox Logic for Pay Button
+        const tncCheckbox = document.getElementById('tnc-checkbox');
+        const payButton = document.getElementById('pay-button');
+
+        tncCheckbox.addEventListener('change', function() {
+            if(this.checked) {
+                payButton.removeAttribute('disabled');
+                payButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                payButton.classList.add('cursor-pointer');
+            } else {
+                payButton.setAttribute('disabled', 'true');
+                payButton.classList.add('opacity-50', 'cursor-not-allowed');
+                payButton.classList.remove('cursor-pointer');
+            }
+        });
+
+        // Simple Countdown Timer (30 mins)
+        let timeInSeconds = 30 * 60;
+        const timerDisplay = document.getElementById('countdown-timer');
+
+        const countdownInterval = setInterval(() => {
+            const minutes = Math.floor(timeInSeconds / 60);
+            let seconds = timeInSeconds % 60;
+
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            timerDisplay.textContent = `${minutes}:${seconds}`;
+
+            if (timeInSeconds <= 0) {
+                clearInterval(countdownInterval);
+                timerDisplay.textContent = "Waktu Habis";
+                // Add logic here for what happens when time is up (e.g., redirect or disable page)
+                payButton.setAttribute('disabled', 'true');
+                payButton.classList.add('opacity-50', 'cursor-not-allowed');
+                tncCheckbox.setAttribute('disabled', 'true');
+            } else {
+                timeInSeconds--;
+            }
+        }, 1000);
+    </script>
+</body></html>

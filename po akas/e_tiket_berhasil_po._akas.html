@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pembayaran Berhasil - E-Tiket</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#1c1c19",
+                        "surface-container-highest": "#e5e2dd",
+                        "tertiary": "#683c0a",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c2c6d2",
+                        "surface-tint": "#1960a6",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fcf9f3",
+                        "secondary-fixed": "#bef19a",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "surface-container-low": "#f6f3ee",
+                        "on-primary-fixed-variant": "#004883",
+                        "secondary-fixed-dim": "#a3d480",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001c39",
+                        "on-secondary-container": "#426d26",
+                        "surface-dim": "#dcdad4",
+                        "on-secondary-fixed": "#0a2100",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#683c0a",
+                        "tertiary-fixed": "#ffdcc0",
+                        "surface-container-high": "#ebe8e2",
+                        "on-surface-variant": "#424751",
+                        "surface": "#fcf9f3",
+                        "primary": "#004782",
+                        "tertiary-fixed-dim": "#fab97e",
+                        "primary-container": "#185fa5",
+                        "surface-container": "#f1ede8",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#2d1600",
+                        "outline": "#727782",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#31302d",
+                        "secondary-container": "#bbee97",
+                        "background": "#fcf9f3",
+                        "on-tertiary-container": "#ffcea5",
+                        "on-secondary-fixed-variant": "#27500a",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#a4c9ff",
+                        "surface-variant": "#e5e2dd",
+                        "inverse-on-surface": "#f3f0eb",
+                        "primary-fixed": "#d4e3ff",
+                        "on-primary-container": "#c1d9ff",
+                        "on-background": "#1c1c19",
+                        "tertiary-container": "#845321",
+                        "secondary": "#3e6922"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "xs": "4px",
+                        "container-max": "1200px",
+                        "xl": "64px",
+                        "base": "8px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "gutter": "20px"
+                    },
+                    "fontFamily": {
+                        "body": ["Work Sans"],
+                        "label-form": ["Work Sans"],
+                        "h2": ["Work Sans"],
+                        "h1-mobile": ["Work Sans"],
+                        "h3": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "h1": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "body": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "label-form": ["14px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "h1-mobile": ["26px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "caption": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Ticket Cutout Effects */
+        .ticket-cutout-left::before, .ticket-cutout-left::after,
+        .ticket-cutout-top::before, .ticket-cutout-top::after {
+            content: '';
+            position: absolute;
+            background-color: theme('colors.background');
+            border-radius: theme('borderRadius.full');
+            border: 1px solid theme('colors.outline-variant');
+        }
+        
+        @media (min-width: 768px) {
+            .ticket-desktop-cutout {
+                position: relative;
+            }
+            .ticket-desktop-cutout::before, .ticket-desktop-cutout::after {
+                content: '';
+                position: absolute;
+                width: 24px;
+                height: 24px;
+                background-color: theme('colors.background');
+                border-radius: 50%;
+                border: 1px solid theme('colors.outline-variant');
+                z-index: 10;
+            }
+            .ticket-desktop-cutout::before {
+                top: -12px;
+                right: 250px;
+                transform: translateX(50%);
+                border-top-color: transparent;
+                border-left-color: transparent;
+                border-right-color: transparent;
+            }
+            .ticket-desktop-cutout::after {
+                bottom: -12px;
+                right: 250px;
+                transform: translateX(50%);
+                border-bottom-color: transparent;
+                border-left-color: transparent;
+                border-right-color: transparent;
+            }
+            .ticket-border-cover-top {
+                position: absolute; top: 0; right: calc(250px - 11px); width: 22px; height: 2px; background: theme('colors.background'); z-index: 11;
+            }
+             .ticket-border-cover-bottom {
+                position: absolute; bottom: 0; right: calc(250px - 11px); width: 22px; height: 2px; background: theme('colors.background'); z-index: 11;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen font-body text-body text-on-surface flex flex-col antialiased">
+<!-- Main Content Area: Centered for Success Screen -->
+<main class="flex-grow flex items-center justify-center py-xl px-gutter">
+<div class="max-w-[800px] w-full flex flex-col items-center gap-lg">
+<!-- Success Header -->
+<div class="flex flex-col items-center text-center gap-sm">
+<div class="w-20 h-20 bg-secondary-container rounded-full flex items-center justify-center mb-sm shadow-sm">
+<span class="material-symbols-outlined text-[48px] text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">
+                        check_circle
+                    </span>
+</div>
+<h1 class="font-h1-mobile md:font-h1 text-h1-mobile md:text-h1 text-on-surface">Pembayaran Berhasil!</h1>
+<p class="text-on-surface-variant max-w-lg">
+                    Terima kasih, pembayaran Anda telah berhasil kami verifikasi. E-Tiket Anda sudah aktif dan salinannya telah dikirim ke email terdaftar.
+                </p>
+</div>
+<!-- Digital E-Ticket Card -->
+<div class="w-full bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col md:flex-row relative ticket-desktop-cutout overflow-visible">
+<!-- Desktop Cutout Border Covers to create the illusion of a notch -->
+<div class="hidden md:block ticket-border-cover-top"></div>
+<div class="hidden md:block ticket-border-cover-bottom"></div>
+<!-- Left Section: Ticket Details -->
+<div class="flex-1 p-md flex flex-col gap-md">
+<!-- Brand & Class -->
+<div class="flex justify-between items-start border-b border-surface-variant pb-sm">
+<div>
+<span class="font-h2 text-h2 text-primary tracking-tight">PO. Akas</span>
+<div class="font-caption text-caption text-on-surface-variant mt-xs">Bus Eksekutif AC</div>
+</div>
+<div class="bg-surface-container-low px-sm py-xs rounded text-right">
+<div class="font-caption text-caption text-on-surface-variant">Kode Booking</div>
+<div class="font-label-form text-label-form text-primary font-bold">AKS-8829J1</div>
+</div>
+</div>
+<!-- Route & Schedule -->
+<div class="flex flex-col gap-base mt-sm">
+<div class="flex items-center justify-between">
+<div class="flex-1">
+<div class="font-caption text-caption text-on-surface-variant">Keberangkatan</div>
+<div class="font-label-form text-label-form text-on-surface text-lg">Surabaya (Bungurasih)</div>
+<div class="font-h3 text-h3 text-on-surface font-bold mt-xs">08:00 WIB</div>
+</div>
+<div class="px-md flex flex-col items-center justify-center text-outline">
+<span class="font-caption text-caption text-on-surface-variant mb-xs">4 Jam</span>
+<div class="w-16 h-px bg-outline-variant relative flex items-center justify-center">
+<span class="material-symbols-outlined text-outline bg-surface-container-lowest px-1 text-[18px]">
+                                        directions_bus
+                                    </span>
+</div>
+</div>
+<div class="flex-1 text-right">
+<div class="font-caption text-caption text-on-surface-variant">Kedatangan</div>
+<div class="font-label-form text-label-form text-on-surface text-lg">Malang (Arjosari)</div>
+<div class="font-h3 text-h3 text-on-surface font-bold mt-xs">12:00 WIB</div>
+</div>
+</div>
+</div>
+<!-- Passenger Details Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-sm bg-surface-container-low p-sm rounded-lg mt-sm border border-surface-variant">
+<div>
+<div class="font-caption text-caption text-on-surface-variant">Tanggal</div>
+<div class="font-label-form text-label-form text-on-surface">15 Okt 2024</div>
+</div>
+<div>
+<div class="font-caption text-caption text-on-surface-variant">Nomor Kursi</div>
+<div class="font-label-form text-label-form text-on-surface">12A, 12B</div>
+</div>
+<div class="col-span-2">
+<div class="font-caption text-caption text-on-surface-variant">Penumpang</div>
+<div class="font-label-form text-label-form text-on-surface">Budi Santoso (+1)</div>
+</div>
+</div>
+</div>
+<!-- Divider (Dashed Line) -->
+<div class="md:w-0 md:border-l-2 md:border-t-0 border-t-2 border-dashed border-outline-variant mx-md md:mx-0 md:my-md relative flex items-center justify-center">
+<!-- Mobile Cutouts -->
+<div class="md:hidden absolute left-[-24px] w-6 h-6 bg-background rounded-full border border-outline-variant border-r-transparent border-t-transparent transform rotate-45"></div>
+<div class="md:hidden absolute right-[-24px] w-6 h-6 bg-background rounded-full border border-outline-variant border-l-transparent border-b-transparent transform rotate-45"></div>
+</div>
+<!-- Right Section: QR Stub -->
+<div class="p-md flex flex-col items-center justify-center bg-surface-container-lowest md:w-[250px] rounded-b-xl md:rounded-r-xl md:rounded-bl-none">
+<div class="text-center mb-sm">
+<div class="font-label-form text-label-form text-on-surface">Scan untuk Boarding</div>
+<div class="font-caption text-caption text-on-surface-variant">Siapkan KTP Anda</div>
+</div>
+<!-- QR Code Image -->
+<div class="w-32 h-32 bg-white p-2 border border-outline-variant rounded mb-sm shadow-sm flex items-center justify-center overflow-hidden">
+<img alt="QR Code" class="w-full h-full object-cover mix-blend-multiply" data-alt="A close-up, high-contrast, black and white digital QR code centered on a pristine white background. The intricate square patterns are sharp and perfectly defined, ready for scanning. The lighting is even and flat, emphasizing the utilitarian nature of the graphic. The overall aesthetic is modern, clean, and highly functional, fitting seamlessly into a digital transport ticket interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYwc3w3Ja1vElMMctF4pibCep-UpuOeLoS0dHEmbN-gLQ8CpppFEYz_vvkRaUwtmMvXyyrh_8SE1lDx-8tkY_ADmNF_4dv6JUXN_IcmK6mPkJNnokxofzlV5EUl11VxBve9DdogTtrPy1Zsmi4gCUAtwcb8w1mmnHCLHiqyIrmfSg6TxtLnTNVmyZOYYINZd-escNdCwwyjnple7swH7Rh4aaz5GRzHE2Xb4RVMGYnkwGOIFz2pJheFTxwPtW3n4yMh0Z9u0_5hppu"/>
+</div>
+<div class="flex items-center gap-xs text-primary bg-primary-fixed py-1 px-3 rounded-full">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span class="font-caption text-caption font-medium">Lunas</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-sm w-full md:w-auto mt-sm">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-xs bg-primary hover:bg-primary-container text-on-primary font-label-form text-label-form py-[12px] px-md rounded-DEFAULT transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                    Unduh PDF
+                </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-xs bg-transparent border border-outline text-on-surface hover:bg-surface-container-low font-label-form text-label-form py-[12px] px-md rounded-DEFAULT transition-colors duration-200">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+                    Pesan Tiket Lagi
+                </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-xs bg-transparent text-primary hover:bg-surface-container-lowest font-label-form text-label-form py-[12px] px-md rounded-DEFAULT transition-colors duration-200 sm:ml-auto">
+                    Kembali ke Beranda
+                </button>
+</div>
+</div>
+</main>
+</body></html>

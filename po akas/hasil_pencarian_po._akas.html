@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PO. Akas - Hasil Pencarian Jadwal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#fab97e",
+                        "surface-container-highest": "#e5e2dd",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "on-primary-container": "#c1d9ff",
+                        "on-tertiary-fixed-variant": "#683c0a",
+                        "tertiary": "#683c0a",
+                        "secondary": "#3e6922",
+                        "surface-dim": "#dcdad4",
+                        "surface-container-high": "#ebe8e2",
+                        "outline-variant": "#c2c6d2",
+                        "outline": "#727782",
+                        "surface-variant": "#e5e2dd",
+                        "secondary-fixed-dim": "#a3d480",
+                        "on-surface": "#1c1c19",
+                        "primary-container": "#185fa5",
+                        "tertiary-fixed": "#ffdcc0",
+                        "primary-fixed": "#d4e3ff",
+                        "primary": "#004782",
+                        "on-tertiary-container": "#ffcea5",
+                        "surface-tint": "#1960a6",
+                        "on-secondary-fixed": "#0a2100",
+                        "inverse-primary": "#a4c9ff",
+                        "on-tertiary-fixed": "#2d1600",
+                        "inverse-surface": "#31302d",
+                        "on-primary-fixed-variant": "#004883",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#fcf9f3",
+                        "background": "#fcf9f3",
+                        "secondary-fixed": "#bef19a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fcf9f3",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#001c39",
+                        "on-surface-variant": "#424751",
+                        "surface-container": "#f1ede8",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#bbee97",
+                        "on-secondary-container": "#426d26",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1c1c19",
+                        "inverse-on-surface": "#f3f0eb",
+                        "surface-container-low": "#f6f3ee",
+                        "tertiary-container": "#845321",
+                        "on-secondary-fixed-variant": "#27500a",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "sm": "12px",
+                        "xl": "64px",
+                        "lg": "48px",
+                        "base": "8px",
+                        "gutter": "20px",
+                        "xs": "4px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-form": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "h2": ["Work Sans"],
+                        "h3": ["Work Sans"],
+                        "body": ["Work Sans"],
+                        "h1": ["Work Sans"],
+                        "h1-mobile": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-form": ["14px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "caption": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "body": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "h1-mobile": ["26px", { "lineHeight": "1.2", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body text-body antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface-dim shadow-sm border-b border-outline-variant dark:border-outline docked full-width top-0 z-50 sticky">
+<div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-xl">
+<div class="text-h2 font-h2 text-primary dark:text-primary-fixed-dim">PO. Akas</div>
+<div class="hidden md:flex items-center space-x-md">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary font-body text-body hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors px-sm py-base rounded-lg" href="#">Beranda</a>
+<a class="text-primary dark:text-primary-fixed-dim font-bold border-b-2 border-primary font-body text-body opacity-80 transition-all duration-200 px-sm py-base" href="#">Jadwal</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary font-body text-body hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors px-sm py-base rounded-lg" href="#">Tentang Kami</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary font-body text-body hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors px-sm py-base rounded-lg" href="#">Kontak</a>
+</div>
+<div class="hidden md:flex items-center space-x-sm">
+<button class="font-label-form text-label-form text-primary hover:bg-surface-container-low px-sm py-base rounded-lg transition-colors">Masuk</button>
+<button class="font-label-form text-label-form bg-primary text-on-primary px-md py-base rounded-lg hover:opacity-90 transition-opacity">Daftar</button>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-on-surface p-sm">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-container-max mx-auto px-gutter py-md md:py-lg flex flex-col gap-lg">
+<!-- Search Modification Form -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
+<form class="flex flex-col md:flex-row gap-md items-end">
+<div class="w-full md:flex-1">
+<label class="font-label-form text-label-form text-on-surface-variant block mb-xs">Asal</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline" data-icon="location_on">location_on</span>
+<input class="w-full pl-xl pr-sm py-sm rounded-lg border-outline-variant bg-surface-container-lowest focus:ring-primary focus:border-primary font-body text-body text-on-surface" type="text" value="Probolinggo"/>
+</div>
+</div>
+<button class="hidden md:flex p-sm rounded-full bg-surface-container hover:bg-surface-container-high transition-colors self-end mb-sm" type="button">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="swap_horiz">swap_horiz</span>
+</button>
+<div class="w-full md:flex-1">
+<label class="font-label-form text-label-form text-on-surface-variant block mb-xs">Tujuan</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline" data-icon="location_on">location_on</span>
+<input class="w-full pl-xl pr-sm py-sm rounded-lg border-outline-variant bg-surface-container-lowest focus:ring-primary focus:border-primary font-body text-body text-on-surface" type="text" value="Surabaya"/>
+</div>
+</div>
+<div class="w-full md:flex-1">
+<label class="font-label-form text-label-form text-on-surface-variant block mb-xs">Tanggal</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline" data-icon="calendar_month">calendar_month</span>
+<input class="w-full pl-xl pr-sm py-sm rounded-lg border-outline-variant bg-surface-container-lowest focus:ring-primary focus:border-primary font-body text-body text-on-surface" type="date" value="2026-06-01"/>
+</div>
+</div>
+<button class="w-full md:w-auto font-label-form text-label-form bg-surface-container text-primary border border-primary px-md py-sm rounded-lg hover:bg-primary-fixed transition-colors whitespace-nowrap h-[42px]" type="submit">
+                    Ubah Pencarian
+                </button>
+</form>
+</section>
+<!-- Results Header & Filters -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm">
+<h1 class="font-h2 text-h2 text-on-surface">
+                Menampilkan 5 jadwal untuk Probolinggo <span class="material-symbols-outlined align-middle mx-xs text-outline-variant" data-icon="arrow_forward">arrow_forward</span> Surabaya
+                <span class="block font-body text-body text-on-surface-variant mt-xs">Selasa 1 Juni 2026</span>
+</h1>
+<div class="w-full md:w-auto flex items-center gap-sm mt-sm md:mt-0">
+<span class="font-label-form text-label-form text-on-surface-variant whitespace-nowrap">Urutkan:</span>
+<select class="w-full md:w-48 rounded-lg border-outline-variant bg-surface-container-lowest py-sm pl-sm pr-xl focus:ring-primary focus:border-primary font-body text-body text-on-surface">
+<option>Harga Terendah</option>
+<option>Harga Termahal</option>
+<option>Keberangkatan Pagi</option>
+<option>Keberangkatan Sore</option>
+</select>
+</div>
+</section>
+<!-- Schedule List -->
+<section class="flex flex-col gap-sm">
+<!-- Ticket Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md flex flex-col md:flex-row gap-md hover:border-primary transition-colors hover:shadow-sm">
+<!-- Bus Info & Time -->
+<div class="flex-grow flex flex-col md:flex-row md:items-center gap-md md:gap-xl">
+<div class="flex flex-col gap-xs min-w-[120px]">
+<span class="font-h3 text-h3 text-on-surface">Akas Eksekutif</span>
+<span class="bg-primary-container text-on-primary-container font-caption text-caption px-sm py-xs rounded-full self-start">Eksekutif</span>
+</div>
+<div class="flex items-center gap-md flex-grow">
+<div class="text-center">
+<span class="block font-h2 text-h2 text-on-surface">07:00</span>
+<span class="block font-caption text-caption text-on-surface-variant">Term. Bayuangga</span>
+</div>
+<div class="flex-grow flex flex-col items-center justify-center px-sm relative">
+<span class="font-caption text-caption text-outline mb-xs">2j 30m</span>
+<div class="w-full h-px bg-outline-variant relative">
+<span class="material-symbols-outlined absolute right-[-8px] top-[-11px] text-outline-variant bg-surface-container-lowest" data-icon="chevron_right">chevron_right</span>
+<span class="material-symbols-outlined absolute left-1/2 -translate-x-1/2 top-[-11px] text-outline bg-surface-container-lowest px-xs" data-icon="directions_bus">directions_bus</span>
+</div>
+</div>
+<div class="text-center">
+<span class="block font-h2 text-h2 text-on-surface">09:30</span>
+<span class="block font-caption text-caption text-on-surface-variant">Bungurasih</span>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="hidden md:block w-px bg-outline-variant border-dashed border-l border-outline-variant mx-sm"></div>
+<div class="md:hidden h-px w-full bg-outline-variant border-dashed border-t border-outline-variant my-sm"></div>
+<!-- Price & Action -->
+<div class="flex flex-row md:flex-col justify-between items-center md:items-end min-w-[150px] gap-sm">
+<div class="flex flex-col items-start md:items-end">
+<span class="font-h2 text-h2 text-primary">Rp 75.000</span>
+<span class="bg-secondary-container text-on-secondary-container font-caption text-caption px-sm py-xs rounded-full flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="event_seat">event_seat</span>
+                            8 kursi tersedia
+                        </span>
+</div>
+<button class="font-label-form text-label-form bg-primary text-on-primary px-xl py-sm rounded-lg hover:opacity-90 transition-opacity w-full md:w-auto">
+                        Pilih
+                    </button>
+</div>
+</div>
+<!-- Ticket Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md flex flex-col md:flex-row gap-md hover:border-primary transition-colors hover:shadow-sm">
+<!-- Bus Info & Time -->
+<div class="flex-grow flex flex-col md:flex-row md:items-center gap-md md:gap-xl">
+<div class="flex flex-col gap-xs min-w-[120px]">
+<span class="font-h3 text-h3 text-on-surface">Akas Patas</span>
+<span class="bg-surface-container-high text-on-surface-variant font-caption text-caption px-sm py-xs rounded-full self-start">Patas</span>
+</div>
+<div class="flex items-center gap-md flex-grow">
+<div class="text-center">
+<span class="block font-h2 text-h2 text-on-surface">08:15</span>
+<span class="block font-caption text-caption text-on-surface-variant">Term. Bayuangga</span>
+</div>
+<div class="flex-grow flex flex-col items-center justify-center px-sm relative">
+<span class="font-caption text-caption text-outline mb-xs">2j 45m</span>
+<div class="w-full h-px bg-outline-variant relative">
+<span class="material-symbols-outlined absolute right-[-8px] top-[-11px] text-outline-variant bg-surface-container-lowest" data-icon="chevron_right">chevron_right</span>
+<span class="material-symbols-outlined absolute left-1/2 -translate-x-1/2 top-[-11px] text-outline bg-surface-container-lowest px-xs" data-icon="directions_bus">directions_bus</span>
+</div>
+</div>
+<div class="text-center">
+<span class="block font-h2 text-h2 text-on-surface">11:00</span>
+<span class="block font-caption text-caption text-on-surface-variant">Bungurasih</span>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="hidden md:block w-px bg-outline-variant border-dashed border-l border-outline-variant mx-sm"></div>
+<div class="md:hidden h-px w-full bg-outline-variant border-dashed border-t border-outline-variant my-sm"></div>
+<!-- Price & Action -->
+<div class="flex flex-row md:flex-col justify-between items-center md:items-end min-w-[150px] gap-sm">
+<div class="flex flex-col items-start md:items-end">
+<span class="font-h2 text-h2 text-primary">Rp 55.000</span>
+<span class="bg-secondary-container text-on-secondary-container font-caption text-caption px-sm py-xs rounded-full flex items-center gap-xs mt-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="event_seat">event_seat</span>
+                            12 kursi tersedia
+                        </span>
+</div>
+<button class="font-label-form text-label-form bg-primary text-on-primary px-xl py-sm rounded-lg hover:opacity-90 transition-opacity w-full md:w-auto">
+                        Pilih
+                    </button>
+</div>
+</div>
+<!-- Empty State Example (Hidden by default, structure provided) -->
+<!--
+            <div class="flex flex-col items-center justify-center py-xl px-md text-center bg-surface-container-lowest border border-outline-variant rounded-xl">
+                <span class="material-symbols-outlined text-[64px] text-outline-variant mb-md" data-icon="search_off">search_off</span>
+                <h3 class="font-h3 text-h3 text-on-surface mb-sm">Tidak ada jadwal ditemukan</h3>
+                <p class="font-body text-body text-on-surface-variant max-w-md mx-auto">Maaf, kami tidak dapat menemukan jadwal keberangkatan untuk rute dan tanggal yang Anda pilih. Silakan coba ubah kriteria pencarian Anda.</p>
+            </div>
+            -->
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-surface-dim mt-auto border-t border-outline-variant">
+<div class="bg-surface-container dark:bg-surface-container-high h-px w-full"></div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg py-xl px-gutter max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1 flex flex-col gap-sm">
+<span class="text-h3 font-h3 text-primary dark:text-primary-fixed-dim">PO. Akas</span>
+<p class="font-body text-body text-on-surface-variant dark:text-on-surface-variant">© 2024 PO. Akas. All rights reserved.</p>
+</div>
+<div class="col-span-1 md:col-span-3 flex flex-col md:flex-row gap-lg justify-end">
+<div class="flex flex-col gap-sm">
+<a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Beranda</a>
+<a class="font-body text-body text-primary dark:text-primary-fixed-dim font-semibold transition-all duration-200" href="#">Jadwal</a>
+</div>
+<div class="flex flex-col gap-sm">
+<a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Tentang Kami</a>
+<a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Kontak</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

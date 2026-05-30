@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PO. Akas - Pesan Tiket Bis Online</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#fab97e",
+                        "surface-container-highest": "#e5e2dd",
+                        "primary-fixed-dim": "#a4c9ff",
+                        "on-primary-container": "#c1d9ff",
+                        "on-tertiary-fixed-variant": "#683c0a",
+                        "tertiary": "#683c0a",
+                        "secondary": "#3e6922",
+                        "surface-dim": "#dcdad4",
+                        "surface-container-high": "#ebe8e2",
+                        "outline-variant": "#c2c6d2",
+                        "outline": "#727782",
+                        "surface-variant": "#e5e2dd",
+                        "secondary-fixed-dim": "#a3d480",
+                        "on-surface": "#1c1c19",
+                        "primary-container": "#185fa5",
+                        "tertiary-fixed": "#ffdcc0",
+                        "primary-fixed": "#d4e3ff",
+                        "primary": "#004782",
+                        "on-tertiary-container": "#ffcea5",
+                        "surface-tint": "#1960a6",
+                        "on-secondary-fixed": "#0a2100",
+                        "inverse-primary": "#a4c9ff",
+                        "on-tertiary-fixed": "#2d1600",
+                        "inverse-surface": "#31302d",
+                        "on-primary-fixed-variant": "#004883",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#fcf9f3",
+                        "background": "#fcf9f3",
+                        "secondary-fixed": "#bef19a",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#fcf9f3",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#001c39",
+                        "on-surface-variant": "#424751",
+                        "surface-container": "#f1ede8",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#bbee97",
+                        "on-secondary-container": "#426d26",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#1c1c19",
+                        "inverse-on-surface": "#f3f0eb",
+                        "surface-container-low": "#f6f3ee",
+                        "tertiary-container": "#845321",
+                        "on-secondary-fixed-variant": "#27500a",
+                        "on-error": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "sm": "12px",
+                        "xl": "64px",
+                        "lg": "48px",
+                        "base": "8px",
+                        "gutter": "20px",
+                        "xs": "4px",
+                        "md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-form": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "h2": ["Work Sans"],
+                        "h3": ["Work Sans"],
+                        "body": ["Work Sans"],
+                        "h1": ["Work Sans"],
+                        "h1-mobile": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-form": ["14px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "caption": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "h2": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "h3": ["20px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "body": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "h1": ["32px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "h1-mobile": ["26px", { "lineHeight": "1.2", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body text-body antialiased selection:bg-primary selection:text-on-primary">
+<nav class="sticky top-0 z-50 bg-surface shadow-sm border-b border-outline-variant">
+<div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-xl">
+<div class="flex items-center gap-lg">
+<a class="text-h2 font-h2 text-primary font-extrabold tracking-tight" href="#">PO. Akas</a>
+<div class="hidden md:flex items-center gap-md h-full">
+<a class="h-xl flex items-center text-primary font-bold border-b-2 border-primary transition-colors opacity-80" href="#">Beranda</a>
+<a class="h-xl flex items-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-sm transition-colors" href="#">Jadwal</a>
+<a class="h-xl flex items-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-sm transition-colors" href="#">Tentang Kami</a>
+<a class="h-xl flex items-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-sm transition-colors" href="#">Kontak</a>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="hidden md:inline-flex items-center justify-center px-4 py-2 font-label-form text-label-form text-primary border border-primary rounded-lg hover:bg-primary hover:text-on-primary transition-colors">Masuk</button>
+<button class="inline-flex items-center justify-center px-4 py-2 font-label-form text-label-form bg-primary-container text-on-primary-container rounded-lg shadow-sm hover:opacity-90 transition-opacity">Daftar</button>
+</div>
+</div>
+</nav>
+<main>
+<section class="relative bg-surface-variant pb-xl">
+<div class="absolute inset-0 z-0">
+<img class="w-full h-[500px] object-cover" data-alt="A sleek, modern high-deck intercity bus traveling along a scenic coastal highway in Indonesia during golden hour. The bus features subtle corporate branding in deep blue and bright white. The lighting is cinematic, highlighting the aerodynamic design of the bus against a warm, inviting sunset sky, conveying speed, reliability, and comfort for long-distance travel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbL4Ua8ZbXest8o-SkOFLfdYDrnwnVuTgoPBi9qGgrNZ_xYSITIoy2rRqZ5q0e2YMn0010tncrSv7NFO5F6H5g-BzuMe5t2nPUtX6VeZhW8No57DX33-1MLF-MLpN4Qd6LMw2hVdlxpSIK-j0eoosJBeIw_ABj0MwWKsG94tkqh7oiIhhIKDodgZTLC4O58pE1NSWaLRP2-wyLmAof2rCVreWgHd9aUb35RKM_DfX4vJcMaXMRN7Lw6AFpE_QfYFN1EsKPB4ePcqtc"/>
+<div class="absolute inset-0 bg-gradient-to-r from-inverse-surface/90 to-inverse-surface/40"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-gutter pt-[100px] pb-[160px]">
+<div class="max-w-2xl">
+<h1 class="font-h1-mobile text-h1-mobile md:font-h1 md:text-h1 text-on-tertiary mb-sm leading-tight">Pesan Tiket Bis Online, Mudah &amp; Cepat</h1>
+<p class="font-body text-body text-surface-container-lowest opacity-90">Layanan armada terbaik dari PO. Akas untuk perjalanan Anda. Keamanan dan kenyamanan adalah prioritas kami.</p>
+</div>
+</div>
+<div class="relative z-20 max-w-container-max mx-auto px-gutter -mt-[100px]">
+<div class="bg-surface rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.08)] border border-outline-variant p-md">
+<div class="flex items-center gap-sm border-b border-surface-container-highest pb-sm mb-md">
+<span class="material-symbols-outlined text-primary">directions_bus</span>
+<span class="font-h3 text-h3 text-on-surface">Cari Tiket Bis</span>
+</div>
+<form class="grid grid-cols-1 md:grid-cols-5 gap-md items-end">
+<div class="flex flex-col gap-xs relative">
+<label class="font-caption text-caption text-on-surface-variant">Kota Asal</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">location_on</span>
+<select class="w-full pl-10 pr-4 py-3 rounded-lg border-outline-variant bg-surface text-on-surface font-body text-body focus:ring-primary focus:border-primary">
+<option>Surabaya</option>
+<option>Probolinggo</option>
+<option>Malang</option>
+<option>Banyuwangi</option>
+</select>
+</div>
+</div>
+<div class="hidden md:flex items-center justify-center -mb-2">
+<button class="w-10 h-10 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-primary transition-colors" type="button">
+<span class="material-symbols-outlined" data-weight="fill">sync_alt</span>
+</button>
+</div>
+<div class="flex flex-col gap-xs relative">
+<label class="font-caption text-caption text-on-surface-variant">Kota Tujuan</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">location_on</span>
+<select class="w-full pl-10 pr-4 py-3 rounded-lg border-outline-variant bg-surface text-on-surface font-body text-body focus:ring-primary focus:border-primary">
+<option>Probolinggo</option>
+<option>Surabaya</option>
+<option>Denpasar</option>
+<option>Jember</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-xs relative">
+<label class="font-caption text-caption text-on-surface-variant">Tanggal Keberangkatan</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">calendar_month</span>
+<input class="w-full pl-10 pr-4 py-3 rounded-lg border-outline-variant bg-surface text-on-surface font-body text-body focus:ring-primary focus:border-primary" type="date"/>
+</div>
+</div>
+<div class="flex flex-col gap-xs relative">
+<label class="font-caption text-caption text-on-surface-variant">Penumpang</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">person</span>
+<select class="w-full pl-10 pr-4 py-3 rounded-lg border-outline-variant bg-surface text-on-surface font-body text-body focus:ring-primary focus:border-primary">
+<option>1 Kursi</option>
+<option>2 Kursi</option>
+<option>3 Kursi</option>
+<option>4 Kursi</option>
+</select>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-3 rounded-lg font-label-form text-label-form shadow-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-xs" type="button">
+<span class="material-symbols-outlined text-[20px]">search</span>
+                            Cari Tiket
+                        </button>
+</form>
+</div>
+</div>
+</section>
+<section class="py-lg bg-background">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="flex justify-between items-end mb-md">
+<div>
+<h2 class="font-h2 text-h2 text-on-surface mb-xs">Rute Populer</h2>
+<p class="font-body text-body text-on-surface-variant">Pilihan destinasi favorit penumpang kami.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="group bg-surface rounded-xl border border-outline-variant overflow-hidden hover:shadow-[0px_4px_12px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="h-32 bg-surface-container-high relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A clean, bright architectural shot of an Indonesian city skyline during daytime. The image features modern buildings interspersed with green trees, conveying a sense of progress and clean urban environment. The color palette is dominated by bright blues from the sky and natural greens, fitting a professional travel booking aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0ecMI3-_4cl7FeYOve7wuWJ4h8D9grRVPhFuRSd4iSTXQRKuuQPLiSmtisVn12C602bbSVeYQakxzRuNGJ8Av00g50pe7J0979PzsNS6GT3OefkmszI772q4p0_RuE5b34vTbC1HcLQIcNRJCNkl7i_qhHSxYFUD1AQmVF4H6YY--1iI03GADXQG2peOyUzizxDo29w6cWd-bwy8dm2ZW4wJYU1T-uTHTFWoDUu5bQ1fYL2TjY6sqneIp4j7r6E2utDGFNSiwRhsm"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 to-transparent"></div>
+<div class="absolute bottom-3 left-4 flex items-center gap-2">
+<span class="bg-surface/90 backdrop-blur-sm text-primary px-2 py-1 rounded text-xs font-bold uppercase tracking-wider">Super Executive</span>
+</div>
+</div>
+<div class="p-sm">
+<div class="flex items-center justify-between mb-sm">
+<div class="flex items-center gap-xs text-on-surface font-h3 text-h3">
+<span>Surabaya</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px]">arrow_forward</span>
+<span>Probolinggo</span>
+</div>
+</div>
+<div class="flex justify-between items-center pt-sm border-t border-surface-container-highest">
+<div>
+<p class="font-caption text-caption text-on-surface-variant">Harga mulai dari</p>
+<p class="font-h3 text-h3 text-primary">Rp 45.000</p>
+</div>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-surface rounded-xl border border-outline-variant overflow-hidden hover:shadow-[0px_4px_12px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="h-32 bg-surface-container-high relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A serene view of an Indonesian highway stretching towards distant mountains under a clear blue sky. The road is well-maintained, suggesting a smooth and safe journey. The image uses a light, airy color palette to evoke a sense of calm and reliability, perfectly matching a professional transport service brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA66GB70zLBNiiQdm_20LVAYCXrDj2hGAsRloQHUce19j72DBDjcmWeXqCywZZpzx8tvog6n9L-62THSwuVjXvCoK-p4K-Bw4sVk91yXFB60ToAiX_9J5t_xOMNt0gWIFaj-9y5JvtioCyLi6H7YDTiEhGZib_Ktofd_VSPp7TFezz4ZBRebMMH8lSfikBpI0n3PP74IE2ZqwHLuj58XMqGFFT-hLmPDSwaA5tzIEEvBy2XW8d8DaFz8ZkESoT7TYcV-5EYod-Vj__F"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 to-transparent"></div>
+<div class="absolute bottom-3 left-4 flex items-center gap-2">
+<span class="bg-surface/90 backdrop-blur-sm text-primary px-2 py-1 rounded text-xs font-bold uppercase tracking-wider">Patas AC</span>
+</div>
+</div>
+<div class="p-sm">
+<div class="flex items-center justify-between mb-sm">
+<div class="flex items-center gap-xs text-on-surface font-h3 text-h3">
+<span>Malang</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px]">arrow_forward</span>
+<span>Jember</span>
+</div>
+</div>
+<div class="flex justify-between items-center pt-sm border-t border-surface-container-highest">
+<div>
+<p class="font-caption text-caption text-on-surface-variant">Harga mulai dari</p>
+<p class="font-h3 text-h3 text-primary">Rp 80.000</p>
+</div>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group bg-surface rounded-xl border border-outline-variant overflow-hidden hover:shadow-[0px_4px_12px_rgba(0,0,0,0.05)] transition-all cursor-pointer">
+<div class="h-32 bg-surface-container-high relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A clean, bright architectural shot of an Indonesian city skyline during daytime. The image features modern buildings interspersed with green trees, conveying a sense of progress and clean urban environment. The color palette is dominated by bright blues from the sky and natural greens, fitting a professional travel booking aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7TonzxCFsGYRYigSUKIsjfTHiWAZRn6Tm3Q6eyM59fhy0IBIsemOWRBTt9v8_6nubBMQ7go0MZPZaL3KlZ7ci3c91mmjB_GKTeAe7vfbqfe1tRFdHvDMOTvJecoqrGS04ke_6moHZ451qnzYKAQ1lwicE378MWtYIlnuL888jV14sRQSac3jc0ron_Unj7zeXFZejYfUjanSnJiEMj2dsgZVA1Iblo5XXQCOYL3yMr-d_wWA2r6mvGsjajmlf4FV3kLTurAvHUtyo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 to-transparent"></div>
+<div class="absolute bottom-3 left-4 flex items-center gap-2">
+<span class="bg-surface/90 backdrop-blur-sm text-primary px-2 py-1 rounded text-xs font-bold uppercase tracking-wider">Ekonomi</span>
+</div>
+</div>
+<div class="p-sm">
+<div class="flex items-center justify-between mb-sm">
+<div class="flex items-center gap-xs text-on-surface font-h3 text-h3">
+<span>Surabaya</span>
+<span class="material-symbols-outlined text-outline-variant text-[18px]">arrow_forward</span>
+<span>Banyuwangi</span>
+</div>
+</div>
+<div class="flex justify-between items-center pt-sm border-t border-surface-container-highest">
+<div>
+<p class="font-caption text-caption text-on-surface-variant">Harga mulai dari</p>
+<p class="font-h3 text-h3 text-primary">Rp 120.000</p>
+</div>
+<button class="text-primary hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-lg bg-surface-container-lowest border-y border-outline-variant/30">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="text-center mb-lg">
+<h2 class="font-h2 text-h2 text-on-surface mb-xs">Keunggulan Layanan</h2>
+<p class="font-body text-body text-on-surface-variant">Mengapa memilih PO. Akas untuk perjalanan Anda?</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md text-center">
+<div class="flex flex-col items-center p-sm">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-sm">
+<span class="material-symbols-outlined text-[32px]">event_seat</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-xs">Kursi Terjamin</h3>
+<p class="font-caption text-caption text-on-surface-variant">Pilih kursi favorit Anda saat memesan tiket secara online tanpa khawatir kehabisan.</p>
+</div>
+<div class="flex flex-col items-center p-sm">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-sm">
+<span class="material-symbols-outlined text-[32px]">payments</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-xs">Bayar Online</h3>
+<p class="font-caption text-caption text-on-surface-variant">Berbagai metode pembayaran yang aman dan instan untuk kemudahan Anda.</p>
+</div>
+<div class="flex flex-col items-center p-sm">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-sm">
+<span class="material-symbols-outlined text-[32px]">confirmation_number</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-xs">E-Tiket Instan</h3>
+<p class="font-caption text-caption text-on-surface-variant">Tiket langsung dikirim ke email dan WhatsApp Anda. Cukup tunjukkan saat boarding.</p>
+</div>
+<div class="flex flex-col items-center p-sm">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-sm">
+<span class="material-symbols-outlined text-[32px]">airline_seat_recline_extra</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-surface mb-xs">Armada Nyaman</h3>
+<p class="font-caption text-caption text-on-surface-variant">Armada terawat dengan fasilitas lengkap untuk kenyamanan perjalanan jarak jauh.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-lg bg-background">
+<div class="max-w-container-max mx-auto px-gutter">
+<div class="bg-surface rounded-2xl border border-outline-variant p-lg flex flex-col md:flex-row items-center gap-lg">
+<div class="w-full md:w-1/3">
+<h2 class="font-h2 text-h2 text-on-surface mb-sm">Cara Pesan Mudah</h2>
+<p class="font-body text-body text-on-surface-variant mb-md">Hanya butuh 3 langkah sederhana untuk memastikan perjalanan Anda bersama kami.</p>
+<button class="px-6 py-3 bg-primary-container text-on-primary-container font-label-form text-label-form rounded-lg hover:opacity-90 transition-opacity">Mulai Pesan Sekarang</button>
+</div>
+<div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-md relative">
+<div class="hidden md:block absolute top-8 left-[16%] right-[16%] h-0.5 bg-outline-variant/50 border-t border-dashed border-outline-variant z-0"></div>
+<div class="relative z-10 flex flex-col items-center text-center bg-surface p-sm rounded-lg">
+<div class="w-12 h-12 rounded-full bg-primary text-on-primary font-h3 text-h3 flex items-center justify-center mb-sm shadow-sm ring-4 ring-surface">1</div>
+<h4 class="font-h3 text-h3 text-on-surface mb-xs">Cari Jadwal</h4>
+<p class="font-caption text-caption text-on-surface-variant">Tentukan rute, tanggal, dan jumlah penumpang.</p>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center bg-surface p-sm rounded-lg">
+<div class="w-12 h-12 rounded-full bg-surface-container text-primary border border-primary font-h3 text-h3 flex items-center justify-center mb-sm shadow-sm ring-4 ring-surface">2</div>
+<h4 class="font-h3 text-h3 text-on-surface mb-xs">Pilih &amp; Bayar</h4>
+<p class="font-caption text-caption text-on-surface-variant">Pilih kursi kosong dan selesaikan pembayaran.</p>
+</div>
+<div class="relative z-10 flex flex-col items-center text-center bg-surface p-sm rounded-lg">
+<div class="w-12 h-12 rounded-full bg-surface-container text-primary border border-primary font-h3 text-h3 flex items-center justify-center mb-sm shadow-sm ring-4 ring-surface">3</div>
+<h4 class="font-h3 text-h3 text-on-surface mb-xs">Terima E-Tiket</h4>
+<p class="font-caption text-caption text-on-surface-variant">E-Tiket langsung siap digunakan untuk boarding.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-container-lowest dark:bg-surface-dim full-width bg-surface-container dark:bg-surface-container-high py-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-lg py-xl px-gutter max-w-container-max mx-auto">
+<div class="col-span-1 md:col-span-1">
+<a class="text-h3 font-h3 text-primary dark:text-primary-fixed-dim block mb-sm" href="#">PO. Akas</a>
+<p class="font-body text-body text-on-surface-variant dark:text-on-surface-variant text-sm">Layanan transportasi darat terpercaya untuk perjalanan antar kota yang aman, nyaman, dan tepat waktu.</p>
+</div>
+<div class="col-span-1 md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div>
+<h4 class="font-h3 text-h3 text-on-surface mb-sm">Navigasi</h4>
+<ul class="flex flex-col gap-xs">
+<li><a class="font-body text-body text-primary dark:text-primary-fixed-dim font-semibold transition-all duration-200" href="#">Beranda</a></li>
+<li><a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Jadwal</a></li>
+<li><a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Tentang Kami</a></li>
+<li><a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Kontak</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-h3 text-h3 text-on-surface mb-sm">Dukungan</h4>
+<ul class="flex flex-col gap-xs">
+<li><a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Pusat Bantuan</a></li>
+<li><a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Syarat &amp; Ketentuan</a></li>
+<li><a class="font-body text-body text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim underline transition-all duration-200" href="#">Kebijakan Privasi</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-h3 text-h3 text-on-surface mb-sm">Hubungi Kami</h4>
+<ul class="flex flex-col gap-xs font-body text-body text-on-surface-variant">
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">call</span> 0811-2233-4455</li>
+<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">mail</span> info@poakas.co.id</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="px-gutter max-w-container-max mx-auto pt-md mt-md border-t border-outline-variant/20">
+<p class="font-body text-body text-on-surface-variant text-sm">© 2024 PO. Akas. All rights reserved.</p>
+</div>
+</footer>
+</body></html>
