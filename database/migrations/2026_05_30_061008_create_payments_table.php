@@ -11,12 +11,10 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('booking_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('midtrans_order_id')->unique();
-            $table->string('snap_token')->nullable();
             $table->decimal('amount', 12, 2);
-            $table->string('method')->nullable();
+            $table->string('method')->default('qris');
             $table->string('status')->default('pending')->index();
-            $table->json('payload')->nullable();
+            $table->string('payment_proof')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });

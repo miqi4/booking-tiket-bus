@@ -137,8 +137,8 @@ class PageController extends Controller
 
             Payment::query()->create([
                 'booking_id' => $booking->id,
-                'midtrans_order_id' => 'MID-'.$booking->booking_code,
                 'amount' => $booking->total_price,
+                'method' => 'qris',
                 'status' => 'pending',
             ]);
 
@@ -157,14 +157,22 @@ class PageController extends Controller
         return view('passenger.booking.confirmation', ['booking' => $booking->load(['schedule.busRoute.originCity', 'schedule.busRoute.destinationCity', 'schedule.bus', 'passengers.seat', 'payments'])]);
     }
 
-    public function pay(Booking $booking): RedirectResponse
+    public function pay(Booking $booking, Request $request): RedirectResponse
     {
         $this->authorizeBooking($booking);
 
-        $booking->update(['status' => 'confirmed', 'payment_status' => 'paid', 'confirmed_at' => now()]);
-        $booking->payments()->latest()->first()?->update(['status' => 'settlement', 'method' => 'qris', 'paid_at' => now()]);
+        $request->validate([
+            'payment_proof' => ['required', 'image', 'max:2048'],
+        ]);
 
-        return redirect()->route('booking.success', $booking->booking_code);
+        $path = $request->file('payment_proof')->store('payment-proofs', 'public');
+
+        $booking->payments()->where('status', 'pending')->latest()->first()?->update([
+            'payment_proof' => $path,
+            'paid_at' => now(),
+        ]);
+
+        return redirect()->route('booking.success', $booking->booking_code)->with('success', 'Bukti pembayaran berhasil diunggah. Silakan tunggu konfirmasi operator.');
     }
 
     public function success(string $code): View

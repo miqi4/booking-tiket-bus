@@ -6,6 +6,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -15,28 +16,34 @@ class PaymentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('booking.id')
-                    ->searchable(),
-                TextColumn::make('midtrans_order_id')
-                    ->searchable(),
+                TextColumn::make('booking.booking_code')
+                    ->label('Kode Booking')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('amount')
-                    ->numeric()
+                    ->label('Jumlah')
+                    ->money('IDR')
                     ->sortable(),
                 TextColumn::make('method')
-                    ->searchable(),
+                    ->label('Metode')
+                    ->badge()
+                    ->color('info'),
                 TextColumn::make('status')
-                    ->searchable(),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'settlement' => 'success',
+                        'failed' => 'danger',
+                        'expired' => 'gray',
+                        default => 'primary',
+                    }),
+                ImageColumn::make('payment_proof')
+                    ->label('Bukti')
+                    ->circular(),
                 TextColumn::make('paid_at')
+                    ->label('Dibayar Pada')
                     ->dateTime()
                     ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

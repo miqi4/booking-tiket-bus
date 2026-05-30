@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Booking;
-use App\Models\BookingNotification;
 use App\Models\Bus;
 use App\Models\BusRoute;
 use App\Models\BusTerminal;
@@ -15,6 +14,7 @@ use App\Models\Seat;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,7 +22,25 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $admin = User::query()->create([
+        // 1. Users
+        $this->seedUsers();
+
+        // 2. Cities & Terminals
+        $cities = $this->seedCitiesAndTerminals();
+
+        // 3. Buses
+        $buses = $this->seedBuses();
+
+        // 4. Routes & Schedules
+        $this->seedRoutesAndSchedules($cities, $buses);
+
+        // 5. Sample Booking for Testing
+        $this->seedSampleBooking($passengerUser ?? User::where('role', 'passenger')->first(), $buses[0]);
+    }
+
+    private function seedUsers(): void
+    {
+        User::query()->create([
             'name' => 'Admin AKAS',
             'email' => 'admin@akas.test',
             'phone' => '081234567890',
@@ -31,7 +49,16 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
         ]);
 
-        $passenger = User::query()->create([
+        User::query()->create([
+            'name' => 'Operator Terminal',
+            'email' => 'operator@akas.test',
+            'phone' => '081234567891',
+            'role' => 'operator',
+            'email_verified_at' => now(),
+            'password' => 'password',
+        ]);
+
+        User::query()->create([
             'name' => 'Budi Santoso',
             'email' => 'budi@example.com',
             'phone' => '081298765432',
@@ -39,92 +66,178 @@ class DatabaseSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => 'password',
         ]);
+    }
 
-        $probolinggo = City::query()->create(['name' => 'Probolinggo', 'province' => 'Jawa Timur']);
-        $surabaya = City::query()->create(['name' => 'Surabaya', 'province' => 'Jawa Timur']);
-        $malang = City::query()->create(['name' => 'Malang', 'province' => 'Jawa Timur']);
+    private function seedCitiesAndTerminals(): array
+    {
+        $citiesData = [
+            ['name' => 'Surabaya', 'province' => 'Jawa Timur', 'terminals' => ['Terminal Purabaya (Bungurasih)']],
+            ['name' => 'Malang', 'province' => 'Jawa Timur', 'terminals' => ['Terminal Arjosari']],
+            ['name' => 'Probolinggo', 'province' => 'Jawa Timur', 'terminals' => ['Terminal Bayuangga']],
+            ['name' => 'Jember', 'province' => 'Jawa Timur', 'terminals' => ['Terminal Tawang Alun']],
+            ['name' => 'Banyuwangi', 'province' => 'Jawa Timur', 'terminals' => ['Terminal Sritanjung', 'Terminal Karangente']],
+            ['name' => 'Sumenep', 'province' => 'Jawa Timur', 'terminals' => ['Terminal Arya Wiraraja']],
+            ['name' => 'Situbondo', 'province' => 'Jawa Timur', 'terminals' => ['Terminal Situbondo']],
+        ];
 
-        $terminalBayuangga = BusTerminal::query()->create(['city_id' => $probolinggo->id, 'name' => 'Terminal Bayuangga']);
-        $terminalPurabaya = BusTerminal::query()->create(['city_id' => $surabaya->id, 'name' => 'Terminal Purabaya']);
-        BusTerminal::query()->create(['city_id' => $malang->id, 'name' => 'Terminal Arjosari']);
+        $cities = [];
+        foreach ($citiesData as $data) {
+            $city = City::query()->create([
+                'name' => $data['name'],
+                'province' => $data['province'],
+                'is_active' => true,
+            ]);
+            
+            $cityTerminals = [];
+            foreach ($data['terminals'] as $terminalName) {
+                $cityTerminals[] = BusTerminal::query()->create([
+                    'city_id' => $city->id,
+                    'name' => $terminalName,
+                    'is_active' => true,
+                ]);
+            }
+            $city->setAttribute('seeded_terminals', $cityTerminals);
+            $cities[$data['name']] = $city;
+        }
+        return $cities;
+    }
 
-        $route = BusRoute::query()->create([
-            'origin_city_id' => $probolinggo->id,
-            'destination_city_id' => $surabaya->id,
-            'origin_terminal_id' => $terminalBayuangga->id,
-            'destination_terminal_id' => $terminalPurabaya->id,
-            'distance_km' => 100,
-            'duration_minutes' => 180,
-        ]);
+    private function seedBuses(): array
+    {
+        $busesData = [
+            ['name' => 'AKAS Mila Executive 01', 'type' => 'executive', 'cap' => 28, 'layout' => '2-2'],
+            ['name' => 'AKAS Mila Executive 02', 'type' => 'executive', 'cap' => 28, 'layout' => '2-2'],
+            ['name' => 'AKAS Asri Ekonomi 05', 'type' => 'economy', 'cap' => 45, 'layout' => '2-3'],
+            ['name' => 'AKAS Asri Ekonomi 06', 'type' => 'economy', 'cap' => 45, 'layout' => '2-3'],
+            ['name' => 'AKAS NR Luxury', 'type' => 'executive', 'cap' => 22, 'layout' => '2-1'],
+        ];
 
-        $bus = Bus::query()->create([
-            'name' => 'AKAS Executive 01',
-            'plate_number' => 'N 1234 AK',
-            'capacity' => 28,
-            'seat_layout' => '2-2',
-            'seat_type' => 'executive',
-            'status' => 'active',
-        ]);
+        $buses = [];
+        foreach ($busesData as $data) {
+            $bus = Bus::query()->create([
+                'name' => $data['name'],
+                'plate_number' => 'N ' . rand(1000, 9999) . ' ' . Str::upper(Str::random(2)),
+                'capacity' => $data['cap'],
+                'seat_layout' => $data['layout'],
+                'seat_type' => $data['type'],
+                'status' => 'active',
+            ]);
 
-        foreach (range(1, 7) as $row) {
-            foreach (range(1, 4) as $column) {
-                Seat::query()->create([
-                    'bus_id' => $bus->id,
-                    'seat_number' => chr(64 + $column).$row,
-                    'row' => $row,
-                    'column' => $column,
+            // Create Seats
+            $cols = $data['layout'] === '2-3' ? 5 : ($data['layout'] === '2-1' ? 3 : 4);
+            $rows = ceil($data['cap'] / $cols);
+            for ($r = 1; $r <= $rows; $r++) {
+                for ($c = 1; $c <= $cols; $c++) {
+                    if (($r - 1) * $cols + $c <= $data['cap']) {
+                        Seat::query()->create([
+                            'bus_id' => $bus->id,
+                            'seat_number' => chr(64 + $c) . $r,
+                            'row' => $r,
+                            'column' => $c,
+                        ]);
+                    }
+                }
+            }
+            $buses[] = $bus;
+        }
+        return $buses;
+    }
+
+    private function seedRoutesAndSchedules(array $cities, array $buses): void
+    {
+        $routesData = [
+            // Surabaya - Jember
+            ['from' => 'Surabaya', 'to' => 'Jember', 'dist' => 200, 'dur' => 300, 'price' => 150000, 'economy_price' => 85000],
+            // Surabaya - Banyuwangi
+            ['from' => 'Surabaya', 'to' => 'Banyuwangi', 'dist' => 290, 'dur' => 450, 'price' => 200000, 'economy_price' => 110000],
+            // Malang - Jember
+            ['from' => 'Malang', 'to' => 'Jember', 'dist' => 180, 'dur' => 240, 'price' => 135000, 'economy_price' => 75000],
+            // Surabaya - Sumenep (Madura)
+            ['from' => 'Surabaya', 'to' => 'Sumenep', 'dist' => 170, 'dur' => 240, 'price' => 120000, 'economy_price' => 70000],
+        ];
+
+        foreach ($routesData as $r) {
+            $route = BusRoute::query()->create([
+                'origin_city_id' => $cities[$r['from']]->id,
+                'destination_city_id' => $cities[$r['to']]->id,
+                'origin_terminal_id' => $cities[$r['from']]->seeded_terminals[0]->id,
+                'destination_terminal_id' => $cities[$r['to']]->seeded_terminals[0]->id,
+                'distance_km' => $r['dist'],
+                'duration_minutes' => $r['dur'],
+                'is_active' => true,
+            ]);
+
+            // Create 3 schedules for each route for today, tomorrow, and day after
+            for ($i = 0; $i < 3; $i++) {
+                $date = now()->addDays($i);
+                
+                // Pagi (Executive)
+                Schedule::query()->create([
+                    'bus_route_id' => $route->id,
+                    'bus_id' => $buses[rand(0, 1)]->id,
+                    'departure_at' => (clone $date)->setTime(8, 0),
+                    'arrival_est' => (clone $date)->setTime(8, 0)->addMinutes($r['dur']),
+                    'price' => $r['price'],
+                    'status' => 'active',
+                    'available_seats' => 28,
+                ]);
+
+                // Siang (Economy)
+                Schedule::query()->create([
+                    'bus_route_id' => $route->id,
+                    'bus_id' => $buses[rand(2, 3)]->id,
+                    'departure_at' => (clone $date)->setTime(13, 30),
+                    'arrival_est' => (clone $date)->setTime(13, 30)->addMinutes($r['dur']),
+                    'price' => $r['economy_price'],
+                    'status' => 'active',
+                    'available_seats' => 45,
+                ]);
+
+                // Malam (Executive Luxury)
+                Schedule::query()->create([
+                    'bus_route_id' => $route->id,
+                    'bus_id' => $buses[4]->id, // Luxury
+                    'departure_at' => (clone $date)->setTime(21, 0),
+                    'arrival_est' => (clone $date)->setTime(21, 0)->addMinutes($r['dur']),
+                    'price' => $r['price'] + 50000,
+                    'status' => 'active',
+                    'available_seats' => 22,
                 ]);
             }
         }
+    }
 
-        $schedule = Schedule::query()->create([
-            'bus_route_id' => $route->id,
-            'bus_id' => $bus->id,
-            'departure_at' => now()->addDay()->setTime(8, 0),
-            'arrival_est' => now()->addDay()->setTime(11, 0),
-            'price' => 125000,
-            'status' => 'active',
-            'available_seats' => 27,
-        ]);
+    private function seedSampleBooking(User $user, Bus $bus): void
+    {
+        $schedule = Schedule::query()->where('bus_id', $bus->id)->first();
+        if (!$schedule) return;
 
         $booking = Booking::query()->create([
-            'user_id' => $passenger->id,
+            'user_id' => $user->id,
             'schedule_id' => $schedule->id,
-            'booking_code' => 'BIS-'.now()->format('Ym').'-00001',
-            'total_price' => 125000,
+            'booking_code' => 'AKAS-' . now()->format('Ym') . '-' . Str::upper(Str::random(5)),
+            'total_price' => $schedule->price,
             'status' => 'confirmed',
             'payment_status' => 'paid',
             'expired_at' => now()->addMinutes(30),
             'confirmed_at' => now(),
         ]);
 
+        $seat = Seat::query()->where('bus_id', $bus->id)->first();
         Passenger::query()->create([
             'booking_id' => $booking->id,
-            'seat_id' => Seat::query()->where('bus_id', $bus->id)->where('seat_number', 'A1')->value('id'),
-            'name' => 'Budi Santoso',
-            'phone' => '081298765432',
-            'id_number' => '3574010101900001',
-            'ticket_code' => 'TKT-'.now()->format('Ymd').'-00001',
+            'seat_id' => $seat->id,
+            'name' => $user->name,
+            'phone' => $user->phone,
+            'ticket_code' => 'TKT-' . now()->format('Ymd') . '-' . Str::upper(Str::random(6)),
         ]);
 
         Payment::query()->create([
             'booking_id' => $booking->id,
-            'midtrans_order_id' => 'MID-'.$booking->booking_code,
-            'amount' => 125000,
+            'amount' => $schedule->price,
             'method' => 'qris',
             'status' => 'settlement',
             'paid_at' => now(),
-            'payload' => ['source' => 'seed'],
-        ]);
-
-        BookingNotification::query()->create([
-            'booking_id' => $booking->id,
-            'type' => 'ticket_issued',
-            'channel' => 'whatsapp',
-            'recipient' => '081298765432',
-            'status' => 'sent',
-            'message' => 'E-tiket AKAS berhasil diterbitkan.',
-            'sent_at' => now(),
         ]);
     }
 }

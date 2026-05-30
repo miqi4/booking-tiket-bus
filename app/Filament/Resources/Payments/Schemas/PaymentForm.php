@@ -3,9 +3,9 @@
 namespace App\Filament\Resources\Payments\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
 
 class PaymentForm
@@ -20,17 +20,26 @@ class PaymentForm
                     ->searchable()
                     ->preload()
                     ->required(),
-                TextInput::make('midtrans_order_id')->label('Midtrans Order ID')->required(),
-                TextInput::make('snap_token')->label('Snap Token'),
                 TextInput::make('amount')->label('Jumlah')->required()->numeric()->prefix('Rp'),
                 Select::make('method')
                     ->label('Metode')
-                    ->options(['qris' => 'QRIS', 'gopay' => 'GoPay', 'bank_transfer' => 'Bank Transfer', 'credit_card' => 'Credit Card']),
+                    ->options(['qris' => 'QRIS'])
+                    ->default('qris')
+                    ->required(),
                 Select::make('status')
-                    ->options(['pending' => 'Pending', 'capture' => 'Capture', 'settlement' => 'Settlement', 'deny' => 'Deny', 'expire' => 'Expire'])
+                    ->options([
+                        'pending' => 'Pending',
+                        'settlement' => 'Berhasil (Settlement)',
+                        'failed' => 'Gagal',
+                        'expired' => 'Kedaluwarsa'
+                    ])
                     ->default('pending')
                     ->required(),
-                Textarea::make('payload')->label('Payload JSON')->columnSpanFull(),
+                FileUpload::make('payment_proof')
+                    ->label('Bukti Pembayaran')
+                    ->image()
+                    ->directory('payment-proofs')
+                    ->columnSpanFull(),
                 DateTimePicker::make('paid_at')->label('Dibayar Pada'),
             ]);
     }

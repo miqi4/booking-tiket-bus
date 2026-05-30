@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Payments\Schemas;
 
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -11,26 +12,37 @@ class PaymentInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('booking.id')
-                    ->label('Booking'),
-                TextEntry::make('midtrans_order_id'),
+                TextEntry::make('booking.booking_code')
+                    ->label('Kode Booking'),
                 TextEntry::make('amount')
-                    ->numeric(),
+                    ->label('Jumlah')
+                    ->money('IDR'),
                 TextEntry::make('method')
-                    ->placeholder('-'),
-                TextEntry::make('status'),
-                TextEntry::make('payload')
-                    ->placeholder('-')
+                    ->label('Metode')
+                    ->badge()
+                    ->color('info'),
+                TextEntry::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'settlement' => 'success',
+                        'failed' => 'danger',
+                        'expired' => 'gray',
+                        default => 'primary',
+                    }),
+                ImageEntry::make('payment_proof')
+                    ->label('Bukti Pembayaran')
                     ->columnSpanFull(),
                 TextEntry::make('paid_at')
+                    ->label('Dibayar Pada')
                     ->dateTime()
                     ->placeholder('-'),
                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                    ->label('Dibuat Pada')
+                    ->dateTime(),
                 TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                    ->label('Diperbarui Pada')
+                    ->dateTime(),
             ]);
     }
 }

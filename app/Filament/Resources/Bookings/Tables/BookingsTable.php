@@ -25,9 +25,21 @@ class BookingsTable
                     ->money()
                     ->sortable(),
                 TextColumn::make('status')
-                    ->searchable(),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'confirmed' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'primary',
+                    }),
                 TextColumn::make('payment_status')
-                    ->searchable(),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'unpaid' => 'danger',
+                        'paid' => 'success',
+                        'partially_paid' => 'warning',
+                        default => 'primary',
+                    }),
                 TextColumn::make('expired_at')
                     ->dateTime()
                     ->sortable(),

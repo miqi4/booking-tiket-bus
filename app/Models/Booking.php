@@ -30,11 +30,6 @@ class Booking extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public function notifications(): HasMany
-    {
-        return $this->hasMany(BookingNotification::class);
-    }
-
     public function boardingScans(): HasMany
     {
         return $this->hasMany(BoardingScan::class);

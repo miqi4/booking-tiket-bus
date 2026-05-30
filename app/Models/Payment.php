@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['booking_id', 'midtrans_order_id', 'snap_token', 'amount', 'method', 'status', 'payload', 'paid_at'])]
+#[Fillable(['booking_id', 'amount', 'method', 'status', 'payment_proof', 'paid_at'])]
 class Payment extends Model
 {
     public function booking(): BelongsTo
@@ -18,8 +18,20 @@ class Payment extends Model
     {
         return [
             'amount' => 'decimal:2',
-            'payload' => 'array',
             'paid_at' => 'datetime',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::updated(function (Payment $payment) {
+            if ($payment->isDirty('status') && $payment->status === 'settlement') {
+                $payment->booking->update([
+                    'status' => 'confirmed',
+                    'payment_status' => 'paid',
+                    'confirmed_at' => now(),
+                ]);
+            }
+        });
     }
 }

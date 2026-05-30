@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Operator\BoardingController;
 use App\Http\Controllers\Passenger\AuthController;
 use App\Http\Controllers\Passenger\PageController;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/{code}/pending', [PageController::class, 'pending'])->name('booking.pending');
     Route::get('/dashboard/pemesanan', [PageController::class, 'history'])->name('dashboard.bookings');
     Route::get('/dashboard/profil', [PageController::class, 'profile'])->name('dashboard.profile');
+
+    // Operator & Admin Boarding Scanner
+    Route::get('/boarding/scan', [BoardingController::class, 'scanner'])->name('operator.boarding.scan');
+    Route::post('/boarding/scan', [BoardingController::class, 'process'])->name('operator.boarding.process');
 });
