@@ -8,8 +8,8 @@
                 @auth
                     <a class="h-xl flex items-center px-sm {{ request()->routeIs('dashboard.*') ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary hover:bg-surface-container-low' }}" href="{{ route('dashboard.bookings') }}">Pemesanan</a>
                     @if(in_array(auth()->user()->role, ['admin', 'operator']))
-                        <a class="h-xl flex items-center px-sm gap-xs {{ request()->routeIs('operator.boarding.*') ? 'text-secondary font-bold border-b-2 border-secondary' : 'text-on-surface-variant hover:text-secondary hover:bg-surface-container-low' }}" href="{{ route('operator.boarding.scan') }}">
-                            <span class="material-symbols-outlined text-[20px]">qr_code_scanner</span>
+                        <a class="h-xl flex items-center px-sm gap-xs {{ request()->routeIs('operator.boarding.*') ? 'text-secondary font-bold border-b-2 border-secondary' : 'text-on-surface-variant hover:text-secondary hover:bg-surface-container-low' }}" href="{{ route('operator.boarding.scan') }}" aria-label="Buka Pemindai Boarding">
+                            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">qr_code_scanner</span>
                             Scan Boarding
                         </a>
                     @endif
@@ -22,8 +22,8 @@
                 <a class="inline-flex items-center justify-center px-4 py-2 font-label-form text-label-form bg-primary-container text-on-primary rounded-lg shadow-sm hover:opacity-90" href="{{ route('register') }}">Daftar</a>
             @else
                 @if(in_array(auth()->user()->role, ['admin', 'operator']))
-                    <a class="md:hidden flex items-center justify-center w-10 h-10 text-secondary border border-secondary rounded-lg" href="{{ route('operator.boarding.scan') }}">
-                        <span class="material-symbols-outlined">qr_code_scanner</span>
+                    <a class="md:hidden flex items-center justify-center w-10 h-10 text-secondary border border-secondary rounded-lg" href="{{ route('operator.boarding.scan') }}" aria-label="Buka Pemindai Boarding">
+                        <span class="material-symbols-outlined" aria-hidden="true">qr_code_scanner</span>
                     </a>
                 @endif
                 <a class="hidden md:inline-flex text-primary font-label-form text-label-form" href="{{ route('dashboard.profile') }}">{{ auth()->user()->name }}</a>

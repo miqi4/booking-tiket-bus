@@ -1,9 +1,110 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../views/**/*.blade.php";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Colors from DESIGN.md */
+    --color-primary: #004782;
+    --color-primary-container: #185fa5;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #c1d9ff;
+
+    --color-secondary: #3e6922;
+    --color-secondary-container: #bbee97;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #426d26;
+
+    --color-tertiary: #683c0a;
+    --color-tertiary-container: #845321;
+    --color-on-tertiary-container: #ffcea5;
+
+    --color-surface: #fcf9f3;
+    --color-surface-dim: #dcdad4;
+    --color-surface-bright: #fcf9f3;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f6f3ee;
+    --color-surface-container: #f1ede8;
+    --color-surface-container-high: #ebe8e2;
+    --color-surface-container-highest: #e5e2dd;
+    --color-surface-variant: #e5e2dd;
+
+    --color-on-surface: #1c1c19;
+    --color-on-background: #1c1c19;
+    --color-on-surface-variant: #424751;
+
+    --color-inverse-surface: #31302d;
+    --color-inverse-on-surface: #f3f0eb;
+
+    --color-outline: #727782;
+    --color-outline-variant: #c2c6d2;
+
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+
+    --color-primary-fixed: #d4e3ff;
+    --color-primary-fixed-dim: #a4c9ff;
+    --color-on-primary-fixed: #001c39;
+    --color-on-primary-fixed-variant: #004883;
+
+    --color-secondary-fixed: #bef19a;
+    --color-secondary-fixed-dim: #a3d480;
+    --color-on-secondary-fixed: #0a2100;
+    --color-on-secondary-fixed-variant: #27500a;
+
+    --color-tertiary-fixed: #ffdcc0;
+    --color-tertiary-fixed-dim: #fab97e;
+    --color-on-tertiary-fixed: #2d1600;
+    --color-on-tertiary-fixed-variant: #683c0a;
+
+    --color-background: #fcf9f3;
+
+    /* Spacing & Layout */
+    --spacing-xs: 4px;
+    --spacing-base: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 24px;
+    --spacing-lg: 48px;
+    --spacing-xl: 64px;
+    --spacing-gutter: 20px;
+    --spacing-container-max: 1200px;
+
+    /* Typography */
+    --font-body: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-h1: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-h2: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-h3: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-caption: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-label-form: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+
+    --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+
+    /* Radius */
+    --radius-sm: 0.125rem;
+    --radius-default: 0.25rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+}
+
+@layer base {
+    html {
+        font-family: var(--font-sans);
+        background-color: var(--color-background);
+        color: var(--color-on-background);
+    }
+}
+
+@layer components {
+    .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .seat-btn {
+        transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+    .seat-btn:hover:not(:disabled) {
+        transform: translateY(-1px);
+    }
 }

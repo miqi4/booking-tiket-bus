@@ -10,15 +10,39 @@
                 <div><h1 class="font-h2 text-h2 text-on-surface mb-xs">{{ $schedule->busRoute->originCity->name }} - {{ $schedule->busRoute->destinationCity->name }}</h1><p class="text-on-surface-variant flex items-center gap-xs"><span class="material-symbols-outlined text-[18px]">calendar_month</span>{{ $schedule->departure_at->translatedFormat('d M Y') }} <span class="mx-2">•</span><span class="material-symbols-outlined text-[18px]">schedule</span>{{ $schedule->departure_at->format('H:i') }} WIB</p></div>
                 <div class="md:text-right"><p class="font-caption text-caption text-on-surface-variant">Kelas Bus</p><p class="font-label-form text-label-form text-on-surface">{{ ucfirst($schedule->bus->seat_type) }} ({{ $schedule->bus->seat_layout }})</p></div>
             </div>
-            <div class="flex flex-wrap items-center justify-center gap-md py-sm"><span class="inline-flex items-center gap-xs"><i class="w-4 h-4 bg-surface-container-lowest border border-primary rounded-sm"></i> Tersedia</span><span class="inline-flex items-center gap-xs"><i class="w-4 h-4 bg-primary rounded-sm"></i> Dipilih</span><span class="inline-flex items-center gap-xs"><i class="w-4 h-4 bg-surface-container-highest rounded-sm"></i> Terisi</span></div>
+            <div class="flex flex-wrap items-center justify-center gap-md py-sm" role="list" aria-label="Legenda Kursi">
+                <span class="inline-flex items-center gap-xs" role="listitem">
+                    <span class="w-5 h-5 bg-surface-container-lowest border border-primary rounded-sm" aria-hidden="true"></span>
+                    Tersedia
+                </span>
+                <span class="inline-flex items-center gap-xs" role="listitem">
+                    <span class="w-5 h-5 bg-primary rounded-sm" aria-hidden="true"></span>
+                    Dipilih
+                </span>
+                <span class="inline-flex items-center gap-xs" role="listitem">
+                    <span class="w-5 h-5 bg-surface-container-highest rounded-sm" aria-hidden="true"></span>
+                    Terisi
+                </span>
+            </div>
             <form id="seat-form" method="POST" action="{{ route('schedules.seats.store', $schedule) }}" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col items-center">@csrf
-                <div class="w-full max-w-[360px] flex justify-end mb-xl pb-sm border-b-2 border-dashed border-outline-variant"><div class="flex flex-col items-center"><span class="material-symbols-outlined text-outline">airline_seat_recline_extra</span><span class="font-caption text-caption text-outline">Supir</span></div></div>
-                <div class="w-full max-w-[360px] grid grid-cols-5 gap-sm justify-items-center">
+                <div class="w-full max-w-[360px] flex justify-end mb-xl pb-sm border-b-2 border-dashed border-outline-variant">
+                    <div class="flex flex-col items-center" aria-label="Posisi Supir">
+                        <span class="material-symbols-outlined text-outline" aria-hidden="true">airline_seat_recline_extra</span>
+                        <span class="font-caption text-caption text-outline">Supir</span>
+                    </div>
+                </div>
+                <div class="w-full max-w-[360px] grid grid-cols-5 gap-y-4 gap-x-2 justify-items-center">
                     @foreach($seats->groupBy(fn($s) => $s['row']) as $row => $rowSeats)
                         @foreach($rowSeats as $seat)
                             @if($schedule->bus->seat_layout === '2-2' && $seat['column'] === 3)<div class="w-12 h-12"></div>@endif
                             @php $occupied = in_array($seat['seat_number'], $occupiedSeatNumbers, true); @endphp
-                            <button type="button" data-seat-number="{{ $seat['seat_number'] }}" @disabled($occupied) class="seat-btn w-12 h-12 rounded-lg font-label-form flex items-center justify-center {{ $occupied ? 'bg-surface-container-highest text-outline cursor-not-allowed' : 'bg-surface-container-lowest border border-primary text-primary' }}">{{ $seat['seat_number'] }}</button>
+                            <button type="button" 
+                                data-seat-number="{{ $seat['seat_number'] }}" 
+                                @disabled($occupied) 
+                                aria-label="Kursi {{ $seat['seat_number'] }}{{ $occupied ? ' - Terisi' : '' }}"
+                                class="seat-btn w-12 h-12 md:w-14 md:h-14 rounded-lg font-label-form flex items-center justify-center {{ $occupied ? 'bg-surface-container-highest text-outline cursor-not-allowed' : 'bg-surface-container-lowest border border-primary text-primary' }}">
+                                {{ $seat['seat_number'] }}
+                            </button>
                         @endforeach
                     @endforeach
                 </div>
