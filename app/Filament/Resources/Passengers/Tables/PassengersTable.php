@@ -15,23 +15,36 @@ class PassengersTable
     {
         return $table
             ->columns([
-                TextColumn::make('booking.id')
-                    ->searchable(),
-                TextColumn::make('seat.id')
-                    ->searchable(),
+                TextColumn::make('booking.booking_code')
+                    ->label('Kode Booking')
+                    ->searchable()
+                    ->copyable(),
+                TextColumn::make('seat_number')
+                    ->label('Nomor Kursi')
+                    ->badge()
+                    ->color('primary')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('name')
+                    ->label('Nama Penumpang')
                     ->searchable(),
                 TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('id_number')
-                    ->searchable(),
+                    ->label('No. HP')
+                    ->searchable()
+                    ->placeholder('-'),
                 TextColumn::make('ticket_code')
-                    ->searchable(),
+                    ->label('Kode Tiket')
+                    ->searchable()
+                    ->copyable()
+                    ->toggleable(),
                 TextColumn::make('boarded_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('Waktu Boarding')
+                    ->dateTime('d M Y H:i')
+                    ->sortable()
+                    ->placeholder('Belum boarding'),
                 TextColumn::make('created_at')
-                    ->dateTime()
+                    ->label('Dipesan')
+                    ->dateTime('d M Y H:i')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')

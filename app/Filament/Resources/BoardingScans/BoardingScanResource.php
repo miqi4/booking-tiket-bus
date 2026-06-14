@@ -20,7 +20,13 @@ class BoardingScanResource extends Resource
 {
     protected static ?string $model = BoardingScan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedQrCode;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Operasional';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Scan Boarding';
 
     public static function form(Schema $schema): Schema
     {

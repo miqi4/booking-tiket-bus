@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('seat_type')->default('standard');
             $table->string('status')->default('active')->index();
             $table->text('description')->nullable();
+
+            // Data kursi disimpan langsung di sini sebagai JSON array.
+            // Setiap elemen: { "seat_number": "1A", "row": 1, "column": 1, "type": "passenger"|"driver", "is_active": true }
+            $table->json('seats')->nullable()->comment('Daftar kursi bus, disimpan sebagai JSON');
+
             $table->timestamps();
         });
     }

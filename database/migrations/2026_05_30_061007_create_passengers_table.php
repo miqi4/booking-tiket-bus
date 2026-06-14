@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('passengers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('booking_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('seat_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
+            $table->string('seat_number', 10)->comment('Nomor kursi, merujuk ke buses.seats JSON');
             $table->string('name');
             $table->string('phone', 30)->nullable();
             $table->string('id_number', 50)->nullable();
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('boarded_at')->nullable();
             $table->timestamps();
 
-            $table->unique(['booking_id', 'seat_id']);
+            $table->unique(['booking_id', 'seat_number']);
         });
     }
 

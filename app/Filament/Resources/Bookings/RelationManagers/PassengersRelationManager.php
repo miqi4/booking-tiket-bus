@@ -1,58 +1,44 @@
 <?php
 
-namespace App\Filament\Resources\Passengers\Schemas;
+namespace App\Filament\Resources\Bookings\RelationManagers;
 
 use App\Models\Booking;
 use App\Models\Passenger;
+use Filament\Forms;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Get;
 use Filament\Schemas\Schema;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
-class PassengerForm
+class PassengersRelationManager extends RelationManager
 {
-    public static function configure(Schema $schema): Schema
+    protected static string $relationship = 'passengers';
+    
+    protected static ?string $title = 'Data Penumpang';
+
+    public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                // Pilih booking — saat berubah, opsi kursi ikut refresh
-                Select::make('booking_id')
-                    ->label('Booking')
-                    ->relationship('booking', 'booking_code')
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->live(),
-
-                // Kursi diambil dari JSON bus sesuai booking yang dipilih
                 Select::make('seat_number')
                     ->label('Nomor Kursi')
                     ->required()
                     ->native(false)
                     ->searchable()
-                    // Nonaktif sampai booking dipilih
-                    ->disabled(fn (Get $get): bool => blank($get('booking_id')))
-                    ->helperText(fn (Get $get): string => blank($get('booking_id'))
-                        ? 'Pilih booking terlebih dahulu'
-                        : '')
-                    ->options(function (Get $get, ?Passenger $record): array {
-                        // Ambil booking_id dari field sibling
-                        $bookingId = $get('booking_id') ?? $record?->booking_id;
-
-                        if (! $bookingId) {
-                            return [];
-                        }
-
+                    ->options(function (RelationManager $livewire, ?Passenger $record): array {
+                        $bookingId = $livewire->getOwnerRecord()->id;
                         $booking = Booking::with('schedule.bus')->find($bookingId);
-                        $bus     = $booking?->schedule?->bus;
+                        $bus = $booking?->schedule?->bus;
 
                         if (! $bus?->seats) {
                             return [];
                         }
 
-                        // Kursi yang sudah terpakai di booking ini
-                        // (kecuali seat milik record yang sedang diedit)
+                        // Kursi yang sudah terpakai di booking ini (kecuali record saat ini)
                         $takenSeats = Passenger::where('booking_id', $bookingId)
                             ->when($record?->id, fn ($q) => $q->where('id', '!=', $record->id))
                             ->pluck('seat_number')
@@ -88,6 +74,45 @@ class PassengerForm
                 DateTimePicker::make('boarded_at')
                     ->label('Waktu Boarding')
                     ->placeholder('Belum boarding'),
+            ]);
+    }
+
+    public function table(Table $table): Table
+    {
+        return $table
+            ->recordTitleAttribute('name')
+            ->columns([
+                TextColumn::make('seat_number')
+                    ->label('Kursi')
+                    ->badge()
+                    ->color('primary'),
+                TextColumn::make('name')
+                    ->label('Nama'),
+                TextColumn::make('phone')
+                    ->label('No. HP')
+                    ->placeholder('-'),
+                TextColumn::make('ticket_code')
+                    ->label('Kode Tiket')
+                    ->copyable(),
+                TextColumn::make('boarded_at')
+                    ->label('Waktu Boarding')
+                    ->dateTime('d M Y H:i')
+                    ->placeholder('Belum boarding'),
+            ])
+            ->filters([
+                //
+            ])
+            ->headerActions([
+                \Filament\Actions\CreateAction::make(),
+            ])
+            ->actions([
+                \Filament\Actions\EditAction::make(),
+                \Filament\Actions\DeleteAction::make(),
+            ])
+            ->bulkActions([
+                \Filament\Actions\BulkActionGroup::make([
+                    \Filament\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 }

@@ -20,7 +20,13 @@ class PassengerResource extends Resource
 {
     protected static ?string $model = Passenger::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Pemesanan';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationLabel = 'Penumpang';
 
     public static function form(Schema $schema): Schema
     {

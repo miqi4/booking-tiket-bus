@@ -14,11 +14,11 @@
             <form id="seat-form" method="POST" action="{{ route('schedules.seats.store', $schedule) }}" class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md flex flex-col items-center">@csrf
                 <div class="w-full max-w-[360px] flex justify-end mb-xl pb-sm border-b-2 border-dashed border-outline-variant"><div class="flex flex-col items-center"><span class="material-symbols-outlined text-outline">airline_seat_recline_extra</span><span class="font-caption text-caption text-outline">Supir</span></div></div>
                 <div class="w-full max-w-[360px] grid grid-cols-5 gap-sm justify-items-center">
-                    @foreach($seats->groupBy('row') as $row => $rowSeats)
+                    @foreach($seats->groupBy(fn($s) => $s['row']) as $row => $rowSeats)
                         @foreach($rowSeats as $seat)
-                            @if($schedule->bus->seat_layout === '2-2' && $seat->column === 3)<div class="w-12 h-12"></div>@endif
-                            @php $occupied = in_array($seat->id, $occupiedSeatIds, true); @endphp
-                            <button type="button" data-seat-id="{{ $seat->id }}" data-seat-number="{{ $seat->seat_number }}" @disabled($occupied) class="seat-btn w-12 h-12 rounded-lg font-label-form flex items-center justify-center {{ $occupied ? 'bg-surface-container-highest text-outline cursor-not-allowed' : 'bg-surface-container-lowest border border-primary text-primary' }}">{{ $seat->seat_number }}</button>
+                            @if($schedule->bus->seat_layout === '2-2' && $seat['column'] === 3)<div class="w-12 h-12"></div>@endif
+                            @php $occupied = in_array($seat['seat_number'], $occupiedSeatNumbers, true); @endphp
+                            <button type="button" data-seat-number="{{ $seat['seat_number'] }}" @disabled($occupied) class="seat-btn w-12 h-12 rounded-lg font-label-form flex items-center justify-center {{ $occupied ? 'bg-surface-container-highest text-outline cursor-not-allowed' : 'bg-surface-container-lowest border border-primary text-primary' }}">{{ $seat['seat_number'] }}</button>
                         @endforeach
                     @endforeach
                 </div>
@@ -30,10 +30,10 @@
 </main>
 @push('scripts')
 <script>
-const maxSeats = {{ $pax }}; const price = {{ (int) $schedule->price }}; const selected = new Map();
+const maxSeats = {{ $pax }}; const price = {{ (int) $schedule->price }}; const selected = new Set();
 function rupiah(value){ return new Intl.NumberFormat('id-ID',{style:'currency', currency:'IDR', maximumFractionDigits:0}).format(value); }
-function render(){ const list=document.getElementById('selected-seats-list'); const inputs=document.getElementById('seat-inputs'); list.innerHTML=''; inputs.innerHTML=''; selected.forEach((num,id)=>{ list.insertAdjacentHTML('beforeend', `<span class="inline-flex items-center px-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-form text-label-form">${num}</span>`); inputs.insertAdjacentHTML('beforeend', `<input type="hidden" name="seat_ids[]" value="${id}">`); }); document.getElementById('seat-count').textContent=`${selected.size} dari ${maxSeats}`; document.getElementById('total-price').textContent=rupiah(selected.size*price); document.getElementById('continue-button').disabled=selected.size!==maxSeats; }
-document.querySelectorAll('.seat-btn:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{ const id=btn.dataset.seatId; if(selected.has(id)){ selected.delete(id); btn.className='seat-btn w-12 h-12 rounded-lg font-label-form flex items-center justify-center bg-surface-container-lowest border border-primary text-primary'; btn.textContent=btn.dataset.seatNumber; } else { if(selected.size>=maxSeats) return; selected.set(id, btn.dataset.seatNumber); btn.className='seat-btn w-12 h-12 rounded-lg font-label-form flex items-center justify-center bg-primary text-on-primary'; btn.innerHTML='<span class="material-symbols-outlined text-[20px]">check</span>'; } render(); }));
+function render(){ const list=document.getElementById('selected-seats-list'); const inputs=document.getElementById('seat-inputs'); list.innerHTML=''; inputs.innerHTML=''; selected.forEach(num=>{ list.insertAdjacentHTML('beforeend', `<span class="inline-flex items-center px-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-form text-label-form">${num}</span>`); inputs.insertAdjacentHTML('beforeend', `<input type="hidden" name="seat_numbers[]" value="${num}">`); }); document.getElementById('seat-count').textContent=`${selected.size} dari ${maxSeats}`; document.getElementById('total-price').textContent=rupiah(selected.size*price); document.getElementById('continue-button').disabled=selected.size!==maxSeats; }
+document.querySelectorAll('.seat-btn:not(:disabled)').forEach(btn=>btn.addEventListener('click',()=>{ const num=btn.dataset.seatNumber; if(selected.has(num)){ selected.delete(num); btn.className='seat-btn w-12 h-12 rounded-lg font-label-form flex items-center justify-center bg-surface-container-lowest border border-primary text-primary'; btn.textContent=num; } else { if(selected.size>=maxSeats) return; selected.add(num); btn.className='seat-btn w-12 h-12 rounded-lg font-label-form flex items-center justify-center bg-primary text-on-primary'; btn.innerHTML='<span class="material-symbols-outlined text-[20px]">check</span>'; } render(); }));
 render();
 </script>
 @endpush

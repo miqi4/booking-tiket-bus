@@ -20,7 +20,13 @@ class BusTerminalResource extends Resource
 {
     protected static ?string $model = BusTerminal::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedMapPin;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Master Data';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Terminal';
 
     public static function form(Schema $schema): Schema
     {

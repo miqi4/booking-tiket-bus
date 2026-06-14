@@ -19,7 +19,7 @@
                     <div class="flex items-center justify-between border-b border-outline-variant pb-sm last:border-0 last:pb-0">
                         <div>
                             <p class="font-label-form font-semibold">{{ $passenger->name }}</p>
-                            <p class="text-caption text-on-surface-variant">Kursi {{ $passenger->seat->seat_number }}</p>
+                            <p class="text-caption text-on-surface-variant">Kursi {{ $passenger->seat_number }}</p>
                             @if($booking->status === 'confirmed')
                                 <p class="font-mono text-xs text-primary mt-xs">{{ $passenger->ticket_code }}</p>
                             @endif

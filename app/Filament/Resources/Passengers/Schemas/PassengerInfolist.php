@@ -11,10 +11,10 @@ class PassengerInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('booking.id')
-                    ->label('Booking'),
-                TextEntry::make('seat.id')
-                    ->label('Seat'),
+                TextEntry::make('booking.booking_code')
+                    ->label('Kode Booking'),
+                TextEntry::make('seat_number')
+                    ->label('Nomor Kursi'),
                 TextEntry::make('name'),
                 TextEntry::make('phone')
                     ->placeholder('-'),

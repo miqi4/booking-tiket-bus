@@ -7,23 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['booking_id', 'seat_id', 'name', 'phone', 'id_number', 'ticket_code', 'boarded_at'])]
+#[Fillable(['booking_id', 'seat_number', 'name', 'phone', 'id_number', 'ticket_code', 'boarded_at'])]
 class Passenger extends Model
 {
+    // ─── Relationships ────────────────────────────────────────────────────────
+
     public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class);
-    }
-
-    public function seat(): BelongsTo
-    {
-        return $this->belongsTo(Seat::class);
     }
 
     public function boardingScans(): HasMany
     {
         return $this->hasMany(BoardingScan::class);
     }
+
+    // ─── Casts ────────────────────────────────────────────────────────────────
 
     protected function casts(): array
     {

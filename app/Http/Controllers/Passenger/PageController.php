@@ -9,7 +9,6 @@ use App\Models\City;
 use App\Models\Passenger;
 use App\Models\Payment;
 use App\Models\Schedule;
-use App\Models\Seat;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -23,17 +22,17 @@ class PageController extends Controller
     public function home(): View
     {
         return view('passenger.home', [
-            'cities' => City::query()->where('is_active', true)->orderBy('name')->get(),
+            'cities'       => City::query()->where('is_active', true)->orderBy('name')->get(),
             'popularRoutes' => BusRoute::query()->with(['originCity', 'destinationCity'])->where('is_active', true)->take(3)->get(),
         ]);
     }
 
     public function schedules(Request $request): View
     {
-        $origin = $request->integer('from');
+        $origin      = $request->integer('from');
         $destination = $request->integer('to');
-        $date = $request->date('date')?->toDateString() ?? now()->toDateString();
-        $pax = max(1, min(6, $request->integer('pax', 1)));
+        $date        = $request->date('date')?->toDateString() ?? now()->toDateString();
+        $pax         = max(1, min(6, $request->integer('pax', 1)));
 
         $schedules = Schedule::query()
             ->with(['bus', 'busRoute.originCity', 'busRoute.destinationCity', 'busRoute.originTerminal', 'busRoute.destinationTerminal'])
@@ -45,42 +44,54 @@ class PageController extends Controller
             ->get();
 
         return view('passenger.schedule.index', [
-            'cities' => City::query()->where('is_active', true)->orderBy('name')->get(),
-            'schedules' => $schedules,
-            'origin' => $origin,
+            'cities'      => City::query()->where('is_active', true)->orderBy('name')->get(),
+            'schedules'   => $schedules,
+            'origin'      => $origin,
             'destination' => $destination,
-            'date' => $date,
-            'pax' => $pax,
+            'date'        => $date,
+            'pax'         => $pax,
         ]);
     }
 
     public function seats(Schedule $schedule, Request $request): View
     {
-        $schedule->load(['bus.seats', 'busRoute.originCity', 'busRoute.destinationCity', 'busRoute.originTerminal', 'busRoute.destinationTerminal']);
+        $schedule->load(['bus', 'busRoute.originCity', 'busRoute.destinationCity', 'busRoute.originTerminal', 'busRoute.destinationTerminal']);
         $pax = max(1, min(6, $request->integer('pax', 1)));
-        $occupiedSeatIds = Passenger::query()
-            ->whereHas('booking', fn (Builder $query) => $query->where('schedule_id', $schedule->id)->whereIn('status', ['pending', 'confirmed']))
-            ->pluck('seat_id')
+
+        // Kursi yang sudah terisi pada jadwal ini
+        $occupiedSeatNumbers = Passenger::query()
+            ->whereHas('booking', fn (Builder $query) => $query
+                ->where('schedule_id', $schedule->id)
+                ->whereIn('status', ['pending', 'confirmed'])
+            )
+            ->pluck('seat_number')
             ->all();
 
         return view('passenger.schedule.seats', [
-            'schedule' => $schedule,
-            'seats' => $schedule->bus->seats->sortBy(['row', 'column']),
-            'occupiedSeatIds' => $occupiedSeatIds,
-            'pax' => $pax,
+            'schedule'            => $schedule,
+            // Daftar kursi diambil langsung dari JSON di bus, bukan tabel terpisah
+            'seats'               => $schedule->bus->seats ?? collect(),
+            'occupiedSeatNumbers' => $occupiedSeatNumbers,
+            'pax'                 => $pax,
         ]);
     }
 
     public function storeSeats(Schedule $schedule, Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'seat_ids' => ['required', 'array', 'min:1'],
-            'seat_ids.*' => ['integer', 'exists:seats,id'],
+            'seat_numbers'   => ['required', 'array', 'min:1'],
+            'seat_numbers.*' => ['string', 'max:10'],
         ]);
 
+        // Validasi bahwa seat_number memang ada di bus ini
+        $busSeatNumbers = ($schedule->bus->seats ?? collect())->pluck('seat_number')->all();
+        foreach ($data['seat_numbers'] as $sn) {
+            abort_unless(in_array($sn, $busSeatNumbers), 422, "Nomor kursi '$sn' tidak valid.");
+        }
+
         $request->session()->put('booking_draft', [
-            'schedule_id' => $schedule->id,
-            'seat_ids' => array_values($data['seat_ids']),
+            'schedule_id'  => $schedule->id,
+            'seat_numbers' => array_values($data['seat_numbers']),
         ]);
 
         return redirect()->route('booking.passengers');
@@ -93,9 +104,18 @@ class PageController extends Controller
             return redirect()->route('schedules.index')->with('error', 'Silakan pilih jadwal dan kursi terlebih dahulu.');
         }
 
+        $schedule = Schedule::query()
+            ->with(['busRoute.originCity', 'busRoute.destinationCity', 'bus'])
+            ->findOrFail($draft['schedule_id']);
+
+        // Data kursi diambil dari JSON bus, filter berdasarkan nomor kursi yang dipilih
+        $selectedSeats = ($schedule->bus->seats ?? collect())
+            ->whereIn('seat_number', $draft['seat_numbers'])
+            ->values();
+
         return view('passenger.booking.passengers', [
-            'schedule' => Schedule::query()->with(['busRoute.originCity', 'busRoute.destinationCity', 'bus'])->findOrFail($draft['schedule_id']),
-            'seats' => Seat::query()->whereIn('id', $draft['seat_ids'])->orderBy('seat_number')->get(),
+            'schedule'      => $schedule,
+            'selectedSeats' => $selectedSeats,
         ]);
     }
 
@@ -104,42 +124,43 @@ class PageController extends Controller
         $draft = $request->session()->get('booking_draft');
         abort_if(! $draft, 404);
 
-        $schedule = Schedule::query()->findOrFail($draft['schedule_id']);
-        $seatIds = $draft['seat_ids'];
+        $schedule     = Schedule::query()->findOrFail($draft['schedule_id']);
+        $seatNumbers  = $draft['seat_numbers'];
+
         $data = $request->validate([
-            'passengers' => ['required', 'array', 'size:'.count($seatIds)],
-            'passengers.*.name' => ['required', 'string', 'max:255'],
-            'passengers.*.phone' => ['required', 'string', 'max:30'],
+            'passengers'             => ['required', 'array', 'size:'.count($seatNumbers)],
+            'passengers.*.name'      => ['required', 'string', 'max:255'],
+            'passengers.*.phone'     => ['required', 'string', 'max:30'],
             'passengers.*.id_number' => ['nullable', 'string', 'max:50'],
         ]);
 
-        $booking = DB::transaction(function () use ($schedule, $seatIds, $data) {
+        $booking = DB::transaction(function () use ($schedule, $seatNumbers, $data) {
             $booking = Booking::query()->create([
-                'user_id' => Auth::id(),
-                'schedule_id' => $schedule->id,
-                'booking_code' => 'BIS-'.now()->format('Ym').'-'.Str::upper(Str::random(5)),
-                'total_price' => $schedule->price * count($seatIds),
-                'status' => 'pending',
+                'user_id'        => Auth::id(),
+                'schedule_id'    => $schedule->id,
+                'booking_code'   => 'BIS-'.now()->format('Ym').'-'.Str::upper(Str::random(5)),
+                'total_price'    => $schedule->price * count($seatNumbers),
+                'status'         => 'pending',
                 'payment_status' => 'unpaid',
-                'expired_at' => now()->addMinutes(30),
+                'expired_at'     => now()->addMinutes(30),
             ]);
 
             foreach (array_values($data['passengers']) as $index => $passengerData) {
                 Passenger::query()->create([
-                    'booking_id' => $booking->id,
-                    'seat_id' => $seatIds[$index],
-                    'name' => $passengerData['name'],
-                    'phone' => $passengerData['phone'],
-                    'id_number' => $passengerData['id_number'] ?? null,
+                    'booking_id'  => $booking->id,
+                    'seat_number' => $seatNumbers[$index],
+                    'name'        => $passengerData['name'],
+                    'phone'       => $passengerData['phone'],
+                    'id_number'   => $passengerData['id_number'] ?? null,
                     'ticket_code' => 'TKT-'.now()->format('Ymd').'-'.Str::upper(Str::random(6)),
                 ]);
             }
 
             Payment::query()->create([
                 'booking_id' => $booking->id,
-                'amount' => $booking->total_price,
-                'method' => 'qris',
-                'status' => 'pending',
+                'amount'     => $booking->total_price,
+                'method'     => 'qris',
+                'status'     => 'pending',
             ]);
 
             return $booking;
@@ -154,7 +175,9 @@ class PageController extends Controller
     {
         $this->authorizeBooking($booking);
 
-        return view('passenger.booking.confirmation', ['booking' => $booking->load(['schedule.busRoute.originCity', 'schedule.busRoute.destinationCity', 'schedule.bus', 'passengers.seat', 'payments'])]);
+        return view('passenger.booking.confirmation', [
+            'booking' => $booking->load(['schedule.busRoute.originCity', 'schedule.busRoute.destinationCity', 'schedule.bus', 'passengers', 'payments']),
+        ]);
     }
 
     public function pay(Booking $booking, Request $request): RedirectResponse
@@ -169,10 +192,11 @@ class PageController extends Controller
 
         $booking->payments()->where('status', 'pending')->latest()->first()?->update([
             'payment_proof' => $path,
-            'paid_at' => now(),
+            'paid_at'       => now(),
         ]);
 
-        return redirect()->route('booking.success', $booking->booking_code)->with('success', 'Bukti pembayaran berhasil diunggah. Silakan tunggu konfirmasi operator.');
+        return redirect()->route('booking.success', $booking->booking_code)
+            ->with('success', 'Bukti pembayaran berhasil diunggah. Silakan tunggu konfirmasi operator.');
     }
 
     public function success(string $code): View
@@ -188,7 +212,11 @@ class PageController extends Controller
     public function history(): View
     {
         return view('passenger.dashboard.history', [
-            'bookings' => Booking::query()->with(['schedule.busRoute.originCity', 'schedule.busRoute.destinationCity', 'passengers'])->where('user_id', Auth::id())->latest()->paginate(10),
+            'bookings' => Booking::query()
+                ->with(['schedule.busRoute.originCity', 'schedule.busRoute.destinationCity', 'passengers'])
+                ->where('user_id', Auth::id())
+                ->latest()
+                ->paginate(10),
         ]);
     }
 
@@ -199,7 +227,11 @@ class PageController extends Controller
 
     private function bookingByCode(string $code): Booking
     {
-        $booking = Booking::query()->with(['schedule.busRoute.originCity', 'schedule.busRoute.destinationCity', 'schedule.bus', 'passengers.seat', 'payments'])->where('booking_code', $code)->firstOrFail();
+        $booking = Booking::query()
+            ->with(['schedule.busRoute.originCity', 'schedule.busRoute.destinationCity', 'schedule.bus', 'passengers', 'payments'])
+            ->where('booking_code', $code)
+            ->firstOrFail();
+
         $this->authorizeBooking($booking);
 
         return $booking;

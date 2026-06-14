@@ -20,7 +20,13 @@ class BusResource extends Resource
 {
     protected static ?string $model = Bus::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTruck;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Master Data';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationLabel = 'Armada Bus';
 
     public static function form(Schema $schema): Schema
     {

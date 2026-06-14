@@ -20,7 +20,13 @@ class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Pemesanan';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Daftar Booking';
 
     public static function form(Schema $schema): Schema
     {
@@ -40,7 +46,7 @@ class BookingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\PassengersRelationManager::class,
         ];
     }
 
