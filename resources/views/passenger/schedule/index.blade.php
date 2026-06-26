@@ -1,4 +1,4 @@
-<x-layouts.passenger title="PO. Akas - Hasil Pencarian Jadwal">
+<x-layouts.passenger title="Bus Akas - Hasil Pencarian Jadwal">
 <main class="flex-grow w-full max-w-container-max mx-auto px-gutter py-md md:py-lg flex flex-col gap-lg">
     <section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-md shadow-sm">
         <form class="grid grid-cols-1 md:grid-cols-5 gap-md items-end" method="GET" action="{{ route('schedules.index') }}">

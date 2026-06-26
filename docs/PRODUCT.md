@@ -1,7 +1,7 @@
 # Product Context: Bus Akas (Reliable Transit)
 
 ## Purpose
-A web-based bus ticket booking system for PO Akas, focusing on the Indonesian transport sector. The goal is to provide a reliable, fast, and professional booking experience.
+A web-based bus ticket booking system for Bus Akas, focusing on the Indonesian transport sector. The goal is to provide a reliable, fast, and professional booking experience.
 
 ## Users
 - **Passengers**: Indonesian travelers looking for reliable bus transportation. They value clarity, speed, and trust.

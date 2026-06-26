@@ -1,4 +1,4 @@
-<x-layouts.passenger title="PO. Akas - Pesan Tiket Bis Online">
+<x-layouts.passenger title="Bus Akas - Pesan Tiket Bis Online">
 <main>
     <section class="relative bg-inverse-surface overflow-hidden">
         <div class="absolute inset-0 z-0">
@@ -7,8 +7,8 @@
         <div class="relative z-10 max-w-container-max mx-auto px-gutter pt-xl pb-[180px]">
             <div class="max-w-2xl">
                 <span class="inline-block bg-primary text-on-primary font-label-form text-[12px] px-sm py-1 rounded-full mb-md tracking-wider uppercase">Terpercaya Sejak 1956</span>
-                <h1 class="font-h1-mobile text-[40px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold">Perjalanan Aman,<br>Tiket Nyaman.</h1>
-                <p class="font-body text-h3 text-inverse-on-surface opacity-80 max-w-lg">Layanan transportasi antar kota PO. Akas dengan armada modern dan jadwal yang selalu tepat waktu.</p>
+                <h1 class="font-h1-mobile text-[40px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold">Perjalanan Aman,<br>Tiba dengan Nyaman.</h1>
+                <p class="font-body text-h3 text-inverse-on-surface opacity-80 max-w-lg">Layanan transportasi antar kota Bus Akas dengan armada modern dan jadwal yang selalu tepat waktu.</p>
             </div>
         </div>
         <div class="relative z-20 max-w-container-max mx-auto px-gutter -mt-[100px] mb-xl">

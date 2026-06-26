@@ -1,4 +1,4 @@
-<x-layouts.passenger title="Pilih Kursi - PO. Akas">
+<x-layouts.passenger title="Pilih Kursi - Bus Akas">
 <main class="flex-grow w-full max-w-container-max mx-auto px-gutter py-md">
     <div class="w-full flex items-center justify-between mb-lg relative max-w-3xl mx-auto">
         <div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-surface-container-highest -z-10"></div>

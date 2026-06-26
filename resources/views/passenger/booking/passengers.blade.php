@@ -1,4 +1,4 @@
-<x-layouts.passenger title="Isi Data Penumpang - PO. Akas">
+<x-layouts.passenger title="Isi Data Penumpang - Bus Akas">
 <main class="flex-grow w-full max-w-container-max mx-auto px-gutter py-md md:py-lg flex flex-col items-center"><div class="w-full max-w-3xl"><div class="mb-md"><h1 class="text-h1-mobile md:text-h1 font-h1-mobile md:font-h1 text-on-surface mb-sm">Detail Penumpang</h1><p class="text-body text-on-surface-variant">Lengkapi data penumpang untuk jadwal {{ $schedule->busRoute->originCity->name }} - {{ $schedule->busRoute->destinationCity->name }}.</p></div>
 <form class="space-y-md" method="POST" action="{{ route('booking.passengers.store') }}">@csrf
 @foreach($selectedSeats as $index => $seat)

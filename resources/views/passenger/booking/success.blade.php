@@ -1,4 +1,4 @@
-<x-layouts.passenger title="E-Tiket Berhasil - PO. Akas">
+<x-layouts.passenger title="E-Tiket Berhasil - Bus Akas">
 <main class="max-w-3xl mx-auto px-gutter py-lg w-full"><div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg text-center">        <div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full mx-auto flex items-center justify-center mb-md">
             <span class="material-symbols-outlined text-[40px]">{{ $booking->status === 'confirmed' ? 'confirmation_number' : 'check' }}</span>
         </div>
