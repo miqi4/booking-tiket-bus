@@ -2,7 +2,7 @@
 <main>
     <section class="relative bg-inverse-surface overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <div class="w-full h-full bg-[linear-gradient(to_right,rgba(49,48,45,1)_30%,rgba(24,95,165,.4)),url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-center opacity-40"></div>
+            <div class="w-full h-full bg-[linear-gradient(to_right,rgba(95, 95, 95, 0)_30%,rgba(24,95,165,.4)),url('/images/bus-background.jpg')] bg-cover bg-center opacity-40"></div>
         </div>
         <div class="relative z-10 max-w-container-max mx-auto px-gutter pt-xl pb-[180px]">
             <div class="max-w-2xl">

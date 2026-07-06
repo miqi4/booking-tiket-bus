@@ -68,8 +68,8 @@
     --spacing-md: 24px;
     --spacing-lg: 48px;
     --spacing-xl: 64px;
-    --spacing-gutter: 20px;
-    --spacing-container-max: 1200px;
+    --spacing-gutter: clamp(20px, 5vw, 64px);
+    --spacing-container-max: 100%;
 
     /* Typography */
     --font-body: "Work Sans", ui-sans-serif, system-ui, sans-serif;

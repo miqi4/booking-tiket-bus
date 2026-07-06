@@ -1,5 +1,5 @@
 <nav class="sticky top-0 z-50 bg-surface shadow-sm border-b border-outline-variant">
-    <div class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-xl">
+    <div class="flex justify-between items-center w-full px-gutter h-xl">
         <div class="flex items-center gap-md">
             <a class="text-h2 font-h2 text-primary font-extrabold tracking-tight" href="{{ route('home') }}">Bus Akas</a>
             <div class="hidden md:flex items-center gap-sm h-full">

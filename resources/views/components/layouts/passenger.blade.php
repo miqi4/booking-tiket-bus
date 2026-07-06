@@ -44,7 +44,7 @@
 <body class="bg-background text-on-background font-body text-body antialiased min-h-screen flex flex-col">
     @include('passenger.partials.nav')
     @if (session('success') || session('error'))
-        <div class="max-w-container-max mx-auto w-full px-gutter pt-sm">
+        <div class="w-full px-gutter pt-sm">
             <div class="rounded-lg border px-sm py-sm {{ session('success') ? 'bg-secondary-container text-on-secondary-container border-secondary-container' : 'bg-error-container text-on-error-container border-error-container' }}">
                 {{ session('success') ?? session('error') }}
             </div>
