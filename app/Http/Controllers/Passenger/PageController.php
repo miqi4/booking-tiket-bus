@@ -29,19 +29,45 @@ class PageController extends Controller
 
     public function schedules(Request $request): View
     {
-        $origin      = $request->integer('from');
-        $destination = $request->integer('to');
-        $date        = $request->date('date')?->toDateString() ?? now()->toDateString();
-        $pax         = max(1, min(6, $request->integer('pax', 1)));
+        $validated = $request->validate([
+            'from' => ['nullable', 'integer', 'exists:cities,id'],
+            'to' => ['nullable', 'integer', 'exists:cities,id', 'different:from'],
+            'date' => ['nullable', 'date', 'after_or_equal:today'],
+            'pax' => ['nullable', 'integer', 'min:1', 'max:6'],
+        ], [
+            'to.different' => 'Kota tujuan harus berbeda dengan kota asal.',
+            'date.after_or_equal' => 'Tanggal keberangkatan tidak boleh di masa lalu.',
+        ]);
+
+        $origin      = $validated['from'] ?? null;
+        $destination = $validated['to'] ?? null;
+        $date        = $validated['date'] ?? now()->toDateString();
+        $pax         = $validated['pax'] ?? 1;
 
         $schedules = Schedule::query()
-            ->with(['bus', 'busRoute.originCity', 'busRoute.destinationCity', 'busRoute.originTerminal', 'busRoute.destinationTerminal'])
+            ->with([
+                'bus',
+                'busRoute.originCity',
+                'busRoute.destinationCity',
+                'busRoute.originTerminal',
+                'busRoute.destinationTerminal',
+                'bookings' => fn($query) => $query->whereIn('status', ['pending', 'confirmed'])->with('passengers')
+            ])
             ->where('status', 'active')
             ->whereDate('departure_at', $date)
+            ->where('departure_at', '>', now()->addHour()) // Hanya tampilkan jadwal lebih dari 1 jam dari sekarang
             ->when($origin, fn (Builder $query) => $query->whereHas('busRoute', fn (Builder $route) => $route->where('origin_city_id', $origin)))
             ->when($destination, fn (Builder $query) => $query->whereHas('busRoute', fn (Builder $route) => $route->where('destination_city_id', $destination)))
             ->orderBy('departure_at')
-            ->get();
+            ->get()
+            ->map(function ($schedule) {
+                $occupiedSeats = $schedule->bookings->sum(fn($booking) => $booking->passengers->count());
+                $schedule->available_seats = max(0, $schedule->bus->capacity - $occupiedSeats);
+                $schedule->is_bookable = $schedule->departure_at->greaterThan(now()->addHour());
+                return $schedule;
+            })
+            ->filter(fn($schedule) => $schedule->available_seats > 0);
+
 
         return view('passenger.schedule.index', [
             'cities'      => City::query()->where('is_active', true)->orderBy('name')->get(),
@@ -55,6 +81,13 @@ class PageController extends Controller
 
     public function seats(Schedule $schedule, Request $request): View
     {
+        // Validasi: Bus tidak bisa dipesan kurang dari 1 jam sebelum keberangkatan
+        abort_if(
+            $schedule->departure_at->lessThanOrEqualTo(now()->addHour()),
+            403,
+            'Pemesanan tidak dapat dilakukan. Bus akan berangkat dalam waktu kurang dari 1 jam.'
+        );
+
         $schedule->load(['bus', 'busRoute.originCity', 'busRoute.destinationCity', 'busRoute.originTerminal', 'busRoute.destinationTerminal']);
         $pax = max(1, min(6, $request->integer('pax', 1)));
 
@@ -78,6 +111,13 @@ class PageController extends Controller
 
     public function storeSeats(Schedule $schedule, Request $request): RedirectResponse
     {
+        // Validasi: Bus tidak bisa dipesan kurang dari 1 jam sebelum keberangkatan
+        abort_if(
+            $schedule->departure_at->lessThanOrEqualTo(now()->addHour()),
+            403,
+            'Pemesanan tidak dapat dilakukan. Bus akan berangkat dalam waktu kurang dari 1 jam.'
+        );
+
         $data = $request->validate([
             'seat_numbers'   => ['required', 'array', 'min:1'],
             'seat_numbers.*' => ['string', 'max:10'],
@@ -125,6 +165,14 @@ class PageController extends Controller
         abort_if(! $draft, 404);
 
         $schedule     = Schedule::query()->findOrFail($draft['schedule_id']);
+        
+        // Validasi: Bus tidak bisa dipesan kurang dari 1 jam sebelum keberangkatan
+        abort_if(
+            $schedule->departure_at->lessThanOrEqualTo(now()->addHour()),
+            403,
+            'Pemesanan tidak dapat dilakukan. Bus akan berangkat dalam waktu kurang dari 1 jam.'
+        );
+        
         $seatNumbers  = $draft['seat_numbers'];
 
         $data = $request->validate([

@@ -1,9 +1,7 @@
 <x-layouts.passenger title="Bus Akas - Pesan Tiket Bis Online">
 <main>
     <section class="relative bg-inverse-surface overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div class="w-full h-full bg-[linear-gradient(to_right,rgba(95, 95, 95, 0)_30%,rgba(24,95,165,.4)),url('/images/bus-background.jpg')] bg-cover bg-center opacity-40"></div>
-        </div>
+        <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, rgba(93, 93, 93, 0.39) 0%, rgba(0, 79, 157, 0.6) 50%, rgba(0, 0, 0, 0.3) 100%), url('{{ asset('images/bus.png') }}'); background-size: cover; background-position: center;"></div>
         <div class="relative z-10 max-w-container-max mx-auto px-gutter pt-xl pb-[180px]">
             <div class="max-w-2xl">
                 <span class="inline-block bg-primary text-on-primary font-label-form text-[12px] px-sm py-1 rounded-full mb-md tracking-wider uppercase">Terpercaya Sejak 1956</span>
@@ -17,12 +15,12 @@
                     <span class="material-symbols-outlined text-primary" aria-hidden="true">directions_bus</span>
                     <h2 class="font-h3 text-h3 text-on-surface">Cari Tiket Bis</h2>
                 </div>
-                <form class="grid grid-cols-1 md:grid-cols-12 gap-md items-end" method="GET" action="{{ route('schedules.index') }}">
+                <form class="grid grid-cols-1 md:grid-cols-12 gap-md items-end" method="GET" action="{{ route('schedules.index') }}" id="searchForm">
                     <div class="md:col-span-3">
                         <label class="flex flex-col gap-xs">
                             <span class="font-label-form text-label-form text-on-surface-variant">Kota Asal</span>
-                            <select name="from" class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary">
-                                <option value="">Pilih asal</option>
+                            <select name="from" required class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary" id="fromCity">
+                                <option value="">Pilih kota asal</option>
                                 @foreach($cities as $city)<option value="{{ $city->id }}">{{ $city->name }}</option>@endforeach
                             </select>
                         </label>
@@ -30,8 +28,8 @@
                     <div class="md:col-span-3">
                         <label class="flex flex-col gap-xs">
                             <span class="font-label-form text-label-form text-on-surface-variant">Kota Tujuan</span>
-                            <select name="to" class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary">
-                                <option value="">Pilih tujuan</option>
+                            <select name="to" required class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary" id="toCity">
+                                <option value="">Pilih kota tujuan</option>
                                 @foreach($cities as $city)<option value="{{ $city->id }}">{{ $city->name }}</option>@endforeach
                             </select>
                         </label>
@@ -39,7 +37,7 @@
                     <div class="md:col-span-2">
                         <label class="flex flex-col gap-xs">
                             <span class="font-label-form text-label-form text-on-surface-variant">Tanggal</span>
-                            <input name="date" value="{{ now()->addDay()->toDateString() }}" class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary" type="date">
+                            <input name="date" required value="{{ now()->addDay()->toDateString() }}" min="{{ now()->toDateString() }}" class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary" type="date">
                         </label>
                     </div>
                     <div class="md:col-span-2">
@@ -57,6 +55,18 @@
                         </button>
                     </div>
                 </form>
+                <script>
+                    document.getElementById('searchForm').addEventListener('submit', function(e) {
+                        const from = document.getElementById('fromCity').value;
+                        const to = document.getElementById('toCity').value;
+                        
+                        if (from && to && from === to) {
+                            e.preventDefault();
+                            alert('Kota asal dan tujuan tidak boleh sama');
+                            return false;
+                        }
+                    });
+                </script>
             </div>
         </div>
     </section>
