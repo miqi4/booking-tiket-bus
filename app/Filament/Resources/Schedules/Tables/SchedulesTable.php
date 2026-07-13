@@ -23,13 +23,13 @@ class SchedulesTable
                 TextColumn::make('bus.name')
                     ->searchable(),
                 TextColumn::make('departure_at')
-                    ->dateTime()
+                    ->dateTime('M j, Y H:i')
                     ->sortable(),
                 TextColumn::make('arrival_est')
-                    ->dateTime()
+                    ->dateTime('M j, Y H:i')
                     ->sortable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->money('IDR')
                     ->sortable(),
                 TextColumn::make('status')
                     ->searchable(),

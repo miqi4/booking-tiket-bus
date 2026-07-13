@@ -26,9 +26,18 @@ class ScheduleForm
                     ->relationship('bus', 'name')
                     ->searchable()
                     ->preload()
-                    ->required(),
-                DateTimePicker::make('departure_at')->label('Berangkat')->required(),
-                DateTimePicker::make('arrival_est')->label('Estimasi Tiba'),
+                    ->required()
+                    ->live()
+                    ->afterStateUpdated(function ($set, $state) {
+                        if ($state) {
+                            $bus = \App\Models\Bus::find($state);
+                            if ($bus) {
+                                $set('available_seats', $bus->capacity);
+                            }
+                        }
+                    }),
+                DateTimePicker::make('departure_at')->label('Berangkat')->seconds(false)->required(),
+                DateTimePicker::make('arrival_est')->label('Estimasi Tiba')->seconds(false),
                 TextInput::make('price')->label('Harga')->required()->numeric()->prefix('Rp'),
                 Select::make('status')
                     ->options(['active' => 'Aktif', 'cancelled' => 'Dibatalkan', 'completed' => 'Selesai'])

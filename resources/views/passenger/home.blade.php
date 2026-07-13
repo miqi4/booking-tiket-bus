@@ -70,46 +70,68 @@
             </div>
         </div>
     </section>
-    <section class="py-xl bg-background">
-        <div class="max-w-container-max mx-auto px-gutter">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-md">
+    <section class="py-xl bg-background overflow-hidden">
+        <div class="max-w-container-max mx-auto px-gutter mb-xl">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
                 <div class="max-w-xl">
                     <h2 class="font-h1 text-[32px] text-on-surface mb-xs">Rute Populer</h2>
                     <p class="font-body text-h3 text-on-surface-variant">Pilihan destinasi favorit penumpang kami untuk perjalanan yang nyaman.</p>
                 </div>
                 <a href="{{ route('schedules.index') }}" class="text-primary font-label-form flex items-center gap-xs hover:underline">Lihat Semua Jadwal <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
             </div>
+        </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-md">
-                @forelse($popularRoutes as $index => $route)
-                    <a href="{{ route('schedules.index', ['from' => $route->origin_city_id, 'to' => $route->destination_city_id, 'date' => now()->addDay()->toDateString(), 'pax' => 1]) }}" 
-                       class="group relative overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg hover:border-primary-container {{ $index === 0 ? 'md:col-span-6 lg:col-span-6' : 'md:col-span-3 lg:col-span-3' }}">
-                        <div class="aspect-[16/9] bg-primary-fixed flex items-center justify-center relative overflow-hidden">
-                            <span class="material-symbols-outlined text-primary text-[64px] transition-transform duration-500 group-hover:scale-110">route</span>
-                            @if($index === 0)
-                                <div class="absolute top-4 left-4 bg-secondary text-on-secondary px-sm py-1 rounded-full font-label-form text-[12px] uppercase tracking-wider shadow-sm">Paling Populer</div>
-                            @endif
-                        </div>
-                        <div class="p-md">
-                            <div class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors">{{ $route->originCity->name }} <span class="text-outline mx-1">→</span> {{ $route->destinationCity->name }}</div>
-                            <div class="flex items-center gap-md mt-sm">
-                                <div class="flex items-center gap-xs text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-[16px]">distance</span>
-                                    <span class="font-caption text-caption">{{ $route->distance_km ?? '-' }} km</span>
+        <style>
+            @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(calc(-50% - 0.5rem)); } /* -50% minus half the gap */
+            }
+            .animate-marquee {
+                animation: marquee 45s linear infinite;
+                display: flex;
+                width: max-content;
+            }
+            .animate-marquee:hover {
+                animation-play-state: paused;
+            }
+        </style>
+        
+        <div class="relative w-full group/marquee">
+            @if($popularRoutes->count() > 0)
+                <div class="animate-marquee gap-md px-gutter">
+                    <!-- We loop twice to create a seamless scrolling effect -->
+                    @for($i = 0; $i < 2; $i++)
+                        @foreach($popularRoutes as $index => $route)
+                            <a href="{{ route('schedules.index', ['from' => $route->origin_city_id, 'to' => $route->destination_city_id, 'date' => now()->addDay()->toDateString(), 'pax' => 1]) }}" 
+                               class="group relative flex flex-col overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg hover:border-primary-container shrink-0 w-[320px] md:w-[380px]">
+                                <div class="aspect-[16/9] bg-primary-fixed flex items-center justify-center relative overflow-hidden">
+                                    <img src="{{ asset('images/bus.png') }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 opacity-80" alt="Route">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 </div>
-                                <div class="flex items-center gap-xs text-on-surface-variant">
-                                    <span class="material-symbols-outlined text-[16px]">schedule</span>
-                                    <span class="font-caption text-caption">{{ $route->duration_minutes ? intdiv($route->duration_minutes, 60).'j '.($route->duration_minutes % 60).'m' : '-' }}</span>
+                                <div class="p-md relative bg-surface-container-lowest z-10 flex-1 flex flex-col justify-center">
+                                    <div class="font-h3 text-h3 text-on-surface group-hover:text-primary transition-colors">{{ $route->originCity->name }} <span class="text-outline mx-1">→</span> {{ $route->destinationCity->name }}</div>
+                                    <div class="flex items-center gap-md mt-sm">
+                                        <div class="flex items-center gap-xs text-on-surface-variant">
+                                            <span class="material-symbols-outlined text-[16px]">distance</span>
+                                            <span class="font-caption text-caption">{{ $route->distance_km ?? '-' }} km</span>
+                                        </div>
+                                        <div class="flex items-center gap-xs text-on-surface-variant">
+                                            <span class="material-symbols-outlined text-[16px]">schedule</span>
+                                            <span class="font-caption text-caption">{{ $route->duration_minutes ? intdiv($route->duration_minutes, 60).'j '.($route->duration_minutes % 60).'m' : '-' }}</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </a>
-                @empty
-                    <div class="col-span-full bg-surface-container-low rounded-xl border border-dashed border-outline-variant p-xl text-center">
+                            </a>
+                        @endforeach
+                    @endfor
+                </div>
+            @else
+                <div class="max-w-container-max mx-auto px-gutter">
+                    <div class="bg-surface-container-low rounded-xl border border-dashed border-outline-variant p-xl text-center">
                         <p class="text-on-surface-variant">Belum ada rute aktif yang ditampilkan.</p>
                     </div>
-                @endforelse
-            </div>
+                </div>
+            @endif
         </div>
     </section>
 </main>

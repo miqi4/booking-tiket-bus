@@ -23,7 +23,7 @@ class PageController extends Controller
     {
         return view('passenger.home', [
             'cities'       => City::query()->where('is_active', true)->orderBy('name')->get(),
-            'popularRoutes' => BusRoute::query()->with(['originCity', 'destinationCity'])->where('is_active', true)->take(3)->get(),
+            'popularRoutes' => BusRoute::query()->with(['originCity', 'destinationCity'])->where('is_active', true)->take(8)->get(),
         ]);
     }
 

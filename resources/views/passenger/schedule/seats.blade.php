@@ -31,10 +31,27 @@
                         <span class="font-caption text-caption text-outline">Supir</span>
                     </div>
                 </div>
-                <div class="w-full max-w-[360px] grid grid-cols-5 gap-y-4 gap-x-2 justify-items-center">
+                @php
+                    $gridCols = match($schedule->bus->seat_layout) {
+                        '2-2' => 'grid-cols-5',
+                        '2-1' => 'grid-cols-4',
+                        '1-2' => 'grid-cols-4',
+                        default => 'grid-cols-5',
+                    };
+                @endphp
+                <div class="w-full max-w-[360px] grid {{ $gridCols }} gap-y-4 gap-x-2 justify-items-center">
                     @foreach($seats->groupBy(fn($s) => $s['row']) as $row => $rowSeats)
                         @foreach($rowSeats as $seat)
-                            @if($schedule->bus->seat_layout === '2-2' && $seat['column'] === 3)<div class="w-12 h-12"></div>@endif
+                            @if($schedule->bus->seat_layout === '2-2' && $seat['column'] === 3)
+                                <div class="w-12 h-12 md:w-14 md:h-14"></div>
+                            @endif
+                            @if($schedule->bus->seat_layout === '2-1' && $seat['column'] === 3)
+                                <div class="w-12 h-12 md:w-14 md:h-14"></div>
+                            @endif
+                            @if($schedule->bus->seat_layout === '1-2' && $seat['column'] === 2)
+                                <div class="w-12 h-12 md:w-14 md:h-14"></div>
+                            @endif
+                            
                             @php $occupied = in_array($seat['seat_number'], $occupiedSeatNumbers, true); @endphp
                             <button type="button" 
                                 data-seat-number="{{ $seat['seat_number'] }}" 

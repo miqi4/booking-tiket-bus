@@ -40,7 +40,7 @@ class Bus extends Model
     {
         $totalColumns = match ($this->seat_layout) {
             '2-3'   => 5,
-            '2-1'   => 3,
+            '2-1', '1-2' => 3,
             default => 4, // '2-2'
         };
 
