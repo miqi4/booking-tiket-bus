@@ -2,21 +2,21 @@
 <main>
     <section class="relative bg-inverse-surface overflow-hidden">
         <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, rgba(93, 93, 93, 0.39) 0%, rgba(0, 79, 157, 0.6) 50%, rgba(0, 0, 0, 0.3) 100%), url('{{ asset('images/bus.png') }}'); background-size: cover; background-position: center;"></div>
-        <div class="relative z-10 max-w-container-max mx-auto px-gutter pt-xl pb-[180px]">
+        <div class="relative z-10 max-w-container-max mx-auto px-gutter pt-lg md:pt-xl pb-[120px] md:pb-[180px]">
             <div class="max-w-2xl">
                 <span class="inline-block bg-primary text-on-primary font-label-form text-[12px] px-sm py-1 rounded-full mb-md tracking-wider uppercase">Terpercaya Sejak 1956</span>
-                <h1 class="font-h1-mobile text-[40px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold">Perjalanan Aman,<br>Tiba dengan Nyaman.</h1>
+                <h1 class="font-h1-mobile text-[30px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold">Perjalanan Aman,<br>Tiba dengan Nyaman.</h1>
                 <p class="font-body text-h3 text-inverse-on-surface opacity-80 max-w-lg">Layanan transportasi antar kota Bus Akas dengan armada modern dan jadwal yang selalu tepat waktu.</p>
             </div>
         </div>
         <div class="relative z-20 max-w-container-max mx-auto px-gutter -mt-[100px] mb-xl">
-            <div class="bg-surface rounded-xl shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-outline-variant p-md md:p-lg">
+            <div class="bg-surface rounded-xl shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-outline-variant p-sm md:p-lg">
                 <div class="flex items-center gap-sm border-b border-surface-container-highest pb-sm mb-md">
                     <span class="material-symbols-outlined text-primary" aria-hidden="true">directions_bus</span>
                     <h2 class="font-h3 text-h3 text-on-surface">Cari Tiket Bis</h2>
                 </div>
-                <form class="grid grid-cols-1 md:grid-cols-12 gap-md items-end" method="GET" action="{{ route('schedules.index') }}" id="searchForm">
-                    <div class="md:col-span-3">
+                <form class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-sm md:gap-md items-end" method="GET" action="{{ route('schedules.index') }}" id="searchForm">
+                    <div class="sm:col-span-1 md:col-span-3">
                         <label class="flex flex-col gap-xs">
                             <span class="font-label-form text-label-form text-on-surface-variant">Kota Asal</span>
                             <select name="from" required class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary" id="fromCity">
@@ -25,7 +25,7 @@
                             </select>
                         </label>
                     </div>
-                    <div class="md:col-span-3">
+                    <div class="sm:col-span-1 md:col-span-3">
                         <label class="flex flex-col gap-xs">
                             <span class="font-label-form text-label-form text-on-surface-variant">Kota Tujuan</span>
                             <select name="to" required class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary" id="toCity">
@@ -34,13 +34,13 @@
                             </select>
                         </label>
                     </div>
-                    <div class="md:col-span-2">
+                    <div class="sm:col-span-1 md:col-span-2">
                         <label class="flex flex-col gap-xs">
                             <span class="font-label-form text-label-form text-on-surface-variant">Tanggal</span>
                             <input name="date" required value="{{ now()->addDay()->toDateString() }}" min="{{ now()->toDateString() }}" class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary" type="date">
                         </label>
                     </div>
-                    <div class="md:col-span-2">
+                    <div class="sm:col-span-1 md:col-span-2">
                         <label class="flex flex-col gap-xs">
                             <span class="font-label-form text-label-form text-on-surface-variant">Penumpang</span>
                             <select name="pax" class="rounded-lg border-outline-variant bg-surface py-3 focus:ring-primary focus:border-primary">
@@ -48,7 +48,7 @@
                             </select>
                         </label>
                     </div>
-                    <div class="md:col-span-2">
+                    <div class="sm:col-span-2 md:col-span-2">
                         <button class="w-full bg-primary text-on-primary py-[13px] rounded-lg font-label-form text-label-form hover:bg-primary-container transition-colors flex items-center justify-center gap-xs shadow-sm" type="submit">
                             <span class="material-symbols-outlined text-[20px]" aria-hidden="true">search</span>
                             Cari Tiket
@@ -136,7 +136,7 @@
     </section>
     
     <section class="py-xl bg-surface-container-lowest">
-        <div class="max-w-full mx-auto px-[150px]">
+        <div class="max-w-full mx-auto px-gutter md:px-lg">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-xl">
                 <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -144,7 +144,7 @@
                     </div>
                     <div>
                         <h3 class="font-h3 text-h3 text-on-surface mb-xs">Layanan</h3>
-                        <p class="text-body text-on-surface-variant">Kepuasan penumpang adalah prioritas kami. Nikmati kemudahan dan kenyamanan layanan Juragan99.</p>
+                        <p class="text-body text-on-surface-variant">Kepuasan penumpang adalah prioritas utama kami.</p>
                     </div>
                 </div>
                 
@@ -154,7 +154,7 @@
                     </div>
                     <div>
                         <h3 class="font-h3 text-h3 text-on-surface mb-xs">Armada Handal</h3>
-                        <p class="text-body text-on-surface-variant">Kami menggunakan armada dengan keluaran terbaru. Dilengkapi dengan fitur-fitur yang akan menemani perjalanan pemudik.</p>
+                        <p class="text-body text-on-surface-variant">Armada modern dengan fitur lengkap untuk kenyamanan Anda.</p>
                     </div>
                 </div>
                 
@@ -164,7 +164,7 @@
                     </div>
                     <div>
                         <h3 class="font-h3 text-h3 text-on-surface mb-xs">Harga Terbaik</h3>
-                        <p class="text-body text-on-surface-variant">Dapatkan penawaran harga terbaik dari kami. Juragan99 memberikan harga terbaik dengan layanan terbaik, sultan!</p>
+                        <p class="text-body text-on-surface-variant">Harga kompetitif dengan kualitas layanan terbaik.</p>
                     </div>
                 </div>
                 
@@ -174,7 +174,7 @@
                     </div>
                     <div>
                         <h3 class="font-h3 text-h3 text-on-surface mb-xs">Reservasi Online</h3>
-                        <p class="text-body text-on-surface-variant">Semakin mudah untuk melakukan transaksi pembelian tiket dapat dilakukan secara online.</p>
+                        <p class="text-body text-on-surface-variant">Pesan tiket dengan mudah dan cepat secara online.</p>
                     </div>
                 </div>
             </div>

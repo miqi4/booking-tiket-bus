@@ -1,3 +1,55 @@
 <x-layouts.passenger title="Konfirmasi Pesanan - Bus Akas">
-<main class="max-w-container-max mx-auto px-gutter py-lg min-h-screen w-full"><h1 class="font-h1 text-h1 text-primary mb-md">Konfirmasi Pesanan</h1><div class="grid grid-cols-1 md:grid-cols-12 gap-md items-start"><div class="md:col-span-8 flex flex-col gap-md"><div class="bg-error-container text-on-error-container rounded-lg p-sm flex items-center gap-sm"><span class="material-symbols-outlined">timer</span><div><p class="font-label-form font-semibold">Selesaikan pembayaran sebelum {{ $booking->expired_at?->format('H:i') }} WIB</p><p class="font-caption text-caption">Pesanan akan dibatalkan otomatis jika melewati batas waktu.</p></div></div><div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md"><h2 class="font-h3 text-h3 text-primary mb-md">Ringkasan Perjalanan</h2><p class="font-h3 text-h3">{{ $booking->schedule->busRoute->originCity->name }} - {{ $booking->schedule->busRoute->destinationCity->name }}</p><p class="text-on-surface-variant">{{ $booking->schedule->departure_at->translatedFormat('d F Y H:i') }} WIB, {{ $booking->schedule->bus->name }}</p></div><div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md"><h2 class="font-h3 text-h3 text-primary mb-md">Daftar Penumpang</h2><div class="space-y-sm">@foreach($booking->passengers as $passenger)<div class="flex justify-between border-b border-outline-variant pb-sm"><div><p class="font-label-form text-label-form">{{ $passenger->name }}</p><p class="font-caption text-caption text-on-surface-variant">{{ $passenger->phone }}</p></div><span class="bg-primary-fixed text-on-primary-fixed px-sm py-xs rounded-full">{{ $passenger->seat_number }}</span></div>@endforeach</div></div></div><aside class="md:col-span-4"><div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md sticky top-[88px]"><h2 class="font-h3 text-h3 mb-md">Pembayaran</h2><div class="flex justify-between mb-sm"><span>Subtotal</span><span>Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span></div><div class="flex justify-between text-h3 font-h3 text-primary border-t border-outline-variant pt-sm mb-md"><span>Total</span><span>Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span></div><div class="mb-md"><p class="font-label-form mb-xs text-center">Scan QRIS di bawah ini:</p><div class="bg-white p-sm border border-outline-variant rounded-lg"><img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PO-AKAS-{{ $booking->booking_code }}" alt="QRIS PO AKAS" class="w-full aspect-square object-contain"></div></div><form method="POST" action="{{ route('booking.pay', $booking) }}" enctype="multipart/form-data">@csrf<div class="mb-md"><label for="payment_proof" class="block font-label-form mb-xs">Unggah Bukti Pembayaran</label><input type="file" id="payment_proof" name="payment_proof" accept="image/*" class="w-full border border-outline-variant rounded-lg p-xs text-sm" required></div><button type="submit" class="w-full bg-primary text-on-primary rounded-lg py-sm font-label-form text-label-form">Kirim Bukti Pembayaran</button></form></div></aside></div></main>
+<main class="max-w-container-max mx-auto px-gutter py-md md:py-lg min-h-screen w-full">
+    <h1 class="font-h2 md:font-h1 text-h2 md:text-h1 text-primary mb-md">Konfirmasi Pesanan</h1>
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-md items-start">
+        <div class="md:col-span-8 flex flex-col gap-md">
+            <div class="bg-error-container text-on-error-container rounded-lg p-sm flex items-start gap-sm">
+                <span class="material-symbols-outlined mt-0.5 shrink-0">timer</span>
+                <div>
+                    <p class="font-label-form font-semibold">Selesaikan pembayaran sebelum {{ $booking->expired_at?->format('H:i') }} WIB</p>
+                    <p class="font-caption text-caption">Pesanan akan dibatalkan otomatis jika melewati batas waktu.</p>
+                </div>
+            </div>
+            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md">
+                <h2 class="font-h3 text-h3 text-primary mb-md">Ringkasan Perjalanan</h2>
+                <p class="font-h3 text-h3">{{ $booking->schedule->busRoute->originCity->name }} - {{ $booking->schedule->busRoute->destinationCity->name }}</p>
+                <p class="text-on-surface-variant">{{ $booking->schedule->departure_at->translatedFormat('d F Y H:i') }} WIB, {{ $booking->schedule->bus->name }}</p>
+            </div>
+            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-md">
+                <h2 class="font-h3 text-h3 text-primary mb-md">Daftar Penumpang</h2>
+                <div class="space-y-sm">
+                    @foreach($booking->passengers as $passenger)
+                    <div class="flex justify-between items-center border-b border-outline-variant pb-sm">
+                        <div>
+                            <p class="font-label-form text-label-form">{{ $passenger->name }}</p>
+                            <p class="font-caption text-caption text-on-surface-variant">{{ $passenger->phone }}</p>
+                        </div>
+                        <span class="bg-primary-fixed text-on-primary-fixed px-sm py-xs rounded-full shrink-0 ml-2">{{ $passenger->seat_number }}</span>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <aside class="md:col-span-4">
+            <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md md:sticky top-[88px]">
+                <h2 class="font-h3 text-h3 mb-md">Pembayaran</h2>
+                <div class="flex justify-between mb-sm"><span>Subtotal</span><span>Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span></div>
+                <div class="flex justify-between text-h3 font-h3 text-primary border-t border-outline-variant pt-sm mb-md"><span>Total</span><span>Rp {{ number_format($booking->total_price, 0, ',', '.') }}</span></div>
+                <div class="mb-md">
+                    <p class="font-label-form mb-xs text-center">Scan QRIS di bawah ini:</p>
+                    <div class="bg-white p-sm border border-outline-variant rounded-lg flex justify-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PO-AKAS-{{ $booking->booking_code }}" alt="QRIS PO AKAS" class="w-full max-w-[240px] aspect-square object-contain">
+                    </div>
+                </div>
+                <form method="POST" action="{{ route('booking.pay', $booking) }}" enctype="multipart/form-data">@csrf
+                    <div class="mb-md">
+                        <label for="payment_proof" class="block font-label-form mb-xs">Unggah Bukti Pembayaran</label>
+                        <input type="file" id="payment_proof" name="payment_proof" accept="image/*" class="w-full border border-outline-variant rounded-lg p-xs text-sm" required>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-on-primary rounded-lg py-sm font-label-form text-label-form">Kirim Bukti Pembayaran</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+</main>
 </x-layouts.passenger>

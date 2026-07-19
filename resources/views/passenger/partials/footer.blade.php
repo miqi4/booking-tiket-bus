@@ -3,7 +3,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-md py-md px-gutter w-full">
             <div>
                 <span class="text-body font-bold text-primary">Bus Akas</span>
-                <p class="text-caption text-on-surface-variant mt-1 text-sm">Layanan transportasi bus premium yang menghubungkan kota besar ke seluruh destinasi nyaman dan terpercaya.</p>
+                <p class="text-caption text-on-surface-variant mt-1 text-sm">Layanan transportasi bus premium menghubungkan berbagai destinasi dengan aman dan terpercaya.</p>
                 <button class="mt-2 px-3 py-1.5 text-sm bg-primary text-on-primary rounded hover:opacity-90 flex items-center gap-1">
                     <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
                     Customer Service

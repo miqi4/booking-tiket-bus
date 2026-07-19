@@ -1,12 +1,12 @@
 <x-layouts.passenger title="E-Tiket Berhasil - Bus Akas">
-<main class="max-w-3xl mx-auto px-gutter py-lg w-full"><div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg text-center">        <div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full mx-auto flex items-center justify-center mb-md">
+<main class="max-w-3xl mx-auto px-gutter py-md md:py-lg w-full"><div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-md md:p-lg text-center">        <div class="w-16 h-16 bg-secondary-container text-on-secondary-container rounded-full mx-auto flex items-center justify-center mb-md">
             <span class="material-symbols-outlined text-[40px]">{{ $booking->status === 'confirmed' ? 'confirmation_number' : 'check' }}</span>
         </div>
         @if($booking->status === 'confirmed')
-            <h1 class="font-h1 text-h1 text-primary mb-sm">E-Tiket Berhasil</h1>
+            <h1 class="font-h2 md:font-h1 text-h2 md:text-h1 text-primary mb-sm">E-Tiket Berhasil</h1>
             <p class="text-on-surface-variant mb-md">Tiket Anda untuk kode booking {{ $booking->booking_code }} sudah siap.</p>
         @else
-            <h1 class="font-h1 text-h1 text-primary mb-sm">Bukti Pembayaran Terkirim</h1>
+            <h1 class="font-h2 md:font-h1 text-h2 md:text-h1 text-primary mb-sm">Bukti Pembayaran Terkirim</h1>
             <p class="text-on-surface-variant mb-md">Kode booking {{ $booking->booking_code }} sedang menunggu konfirmasi operator.</p>
         @endif
         
@@ -32,5 +32,5 @@
                     </div>
                 @endforeach
             </div>
-        </div><div class="flex flex-col md:flex-row gap-sm justify-center"><a class="px-md py-sm bg-primary text-on-primary rounded-lg" href="{{ route('dashboard.bookings') }}">Lihat Riwayat</a><a class="px-md py-sm border border-primary text-primary rounded-lg" href="{{ route('home') }}">Pesan Lagi</a></div></div></main>
+        </div><div class="flex flex-col sm:flex-row gap-sm justify-center"><a class="w-full sm:w-auto text-center px-md py-sm bg-primary text-on-primary rounded-lg" href="{{ route('dashboard.bookings') }}">Lihat Riwayat</a><a class="w-full sm:w-auto text-center px-md py-sm border border-primary text-primary rounded-lg" href="{{ route('home') }}">Pesan Lagi</a></div></div></main>
 </x-layouts.passenger>
