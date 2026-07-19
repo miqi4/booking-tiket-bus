@@ -1,16 +1,16 @@
 <x-layouts.passenger title="Bus Akas - Pesan Tiket Bis Online">
-<main>
+<main data-page-home>
     <section class="relative bg-inverse-surface overflow-hidden">
         <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, rgba(93, 93, 93, 0.39) 0%, rgba(0, 79, 157, 0.6) 50%, rgba(0, 0, 0, 0.3) 100%), url('{{ asset('images/bus.png') }}'); background-size: cover; background-position: center;"></div>
         <div class="relative z-10 max-w-container-max mx-auto px-gutter pt-lg md:pt-xl pb-[120px] md:pb-[180px]">
             <div class="max-w-2xl">
-                <span class="inline-block bg-primary text-on-primary font-label-form text-[12px] px-sm py-1 rounded-full mb-md tracking-wider uppercase">Terpercaya Sejak 1956</span>
-                <h1 class="font-h1-mobile text-[30px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold">Perjalanan Aman,<br>Tiba dengan Nyaman.</h1>
-                <p class="font-body text-h3 text-inverse-on-surface opacity-80 max-w-lg">Layanan transportasi antar kota Bus Akas dengan armada modern dan jadwal yang selalu tepat waktu.</p>
+                <span class="inline-block bg-primary text-on-primary font-label-form text-[12px] px-sm py-1 rounded-full mb-md tracking-wider uppercase page-enter" style="--enter-delay: 80ms;">Terpercaya Sejak 1956</span>
+                <h1 class="font-h1-mobile text-[30px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold page-enter" style="--enter-delay: 180ms;">Perjalanan Aman,<br>Tiba dengan Nyaman.</h1>
+                <p class="font-body text-h3 text-inverse-on-surface opacity-80 max-w-lg page-enter" style="--enter-delay: 280ms;">Layanan transportasi antar kota Bus Akas dengan armada modern dan jadwal yang selalu tepat waktu.</p>
             </div>
         </div>
-        <div class="relative z-20 max-w-container-max mx-auto px-gutter -mt-[100px] mb-xl">
-            <div class="bg-surface rounded-xl shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-outline-variant p-sm md:p-lg">
+        <div class="relative z-20 max-w-container-max mx-auto px-gutter -mt-[100px] mb-xl page-enter" style="--enter-delay: 360ms;">
+            <div class="bg-surface rounded-xl shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-outline-variant p-sm md:p-lg hover:-translate-y-1 transition-transform duration-300">
                 <div class="flex items-center gap-sm border-b border-surface-container-highest pb-sm mb-md">
                     <span class="material-symbols-outlined text-primary" aria-hidden="true">directions_bus</span>
                     <h2 class="font-h3 text-h3 text-on-surface">Cari Tiket Bis</h2>
@@ -49,7 +49,7 @@
                         </label>
                     </div>
                     <div class="sm:col-span-2 md:col-span-2">
-                        <button class="w-full bg-primary text-on-primary py-[13px] rounded-lg font-label-form text-label-form hover:bg-primary-container transition-colors flex items-center justify-center gap-xs shadow-sm" type="submit">
+                        <button class="w-full bg-primary text-on-primary py-[13px] rounded-lg font-label-form text-label-form hover:bg-primary-container transition-colors flex items-center justify-center gap-xs shadow-sm hover:scale-[1.01] active:scale-[0.99]" type="submit">
                             <span class="material-symbols-outlined text-[20px]" aria-hidden="true">search</span>
                             Cari Tiket
                         </button>
@@ -59,7 +59,7 @@
                     document.getElementById('searchForm').addEventListener('submit', function(e) {
                         const from = document.getElementById('fromCity').value;
                         const to = document.getElementById('toCity').value;
-                        
+
                         if (from && to && from === to) {
                             e.preventDefault();
                             alert('Kota asal dan tujuan tidak boleh sama');
@@ -70,7 +70,7 @@
             </div>
         </div>
     </section>
-    <section class="py-xl bg-background overflow-hidden">
+    <section class="py-xl bg-background overflow-hidden" data-reveal style="--reveal-delay: 60ms;">
         <div class="max-w-container-max mx-auto px-gutter mb-xl">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
                 <div class="max-w-xl">
@@ -80,11 +80,11 @@
                 <a href="{{ route('schedules.index') }}" class="text-primary font-label-form flex items-center gap-xs hover:underline">Lihat Semua Jadwal <span class="material-symbols-outlined text-[18px]">arrow_forward</span></a>
             </div>
         </div>
-            
+
         <style>
             @keyframes marquee {
                 0% { transform: translateX(0); }
-                100% { transform: translateX(calc(-50% - 0.5rem)); } /* -50% minus half the gap */
+                100% { transform: translateX(calc(-50% - 0.5rem)); }
             }
             .animate-marquee {
                 animation: marquee 45s linear infinite;
@@ -95,15 +95,16 @@
                 animation-play-state: paused;
             }
         </style>
-        
+
         <div class="relative w-full group/marquee">
             @if($popularRoutes->count() > 0)
                 <div class="animate-marquee gap-md px-gutter">
-                    <!-- We loop twice to create a seamless scrolling effect -->
                     @for($i = 0; $i < 2; $i++)
                         @foreach($popularRoutes as $index => $route)
-                            <a href="{{ route('schedules.index', ['from' => $route->origin_city_id, 'to' => $route->destination_city_id, 'date' => now()->addDay()->toDateString(), 'pax' => 1]) }}" 
-                               class="group relative flex flex-col overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg hover:border-primary-container shrink-0 w-[320px] md:w-[380px]">
+                            <a href="{{ route('schedules.index', ['from' => $route->origin_city_id, 'to' => $route->destination_city_id, 'date' => now()->addDay()->toDateString(), 'pax' => 1]) }}"
+                               class="group relative flex flex-col overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg hover:border-primary-container shrink-0 w-[320px] md:w-[380px]"
+                               data-reveal
+                               style="--reveal-delay: {{ ($index % 4) * 90 }}ms;">
                                 <div class="aspect-[16/9] bg-primary-fixed flex items-center justify-center relative overflow-hidden">
                                     <img src="{{ asset('images/bus.png') }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 opacity-80" alt="Route">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -127,18 +128,18 @@
                 </div>
             @else
                 <div class="max-w-container-max mx-auto px-gutter">
-                    <div class="bg-surface-container-low rounded-xl border border-dashed border-outline-variant p-xl text-center">
+                    <div class="bg-surface-container-low rounded-xl border border-dashed border-outline-variant p-xl text-center" data-reveal>
                         <p class="text-on-surface-variant">Belum ada rute aktif yang ditampilkan.</p>
                     </div>
                 </div>
             @endif
         </div>
     </section>
-    
-    <section class="py-xl bg-surface-container-lowest">
+
+    <section class="py-xl bg-surface-container-lowest" data-reveal>
         <div class="max-w-full mx-auto px-gutter md:px-lg">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-xl">
-                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 0ms;">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary text-[32px]">support_agent</span>
                     </div>
@@ -147,8 +148,8 @@
                         <p class="text-body text-on-surface-variant">Kepuasan penumpang adalah prioritas utama kami.</p>
                     </div>
                 </div>
-                
-                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 100ms;">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary text-[32px]">directions_bus</span>
                     </div>
@@ -157,8 +158,8 @@
                         <p class="text-body text-on-surface-variant">Armada modern dengan fitur lengkap untuk kenyamanan Anda.</p>
                     </div>
                 </div>
-                
-                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 200ms;">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary text-[32px]">sell</span>
                     </div>
@@ -167,8 +168,8 @@
                         <p class="text-body text-on-surface-variant">Harga kompetitif dengan kualitas layanan terbaik.</p>
                     </div>
                 </div>
-                
-                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 300ms;">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary text-[32px]">confirmation_number</span>
                     </div>
