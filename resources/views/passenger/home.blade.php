@@ -134,5 +134,51 @@
             @endif
         </div>
     </section>
+    
+    <section class="py-xl bg-surface-container-lowest">
+        <div class="max-w-full mx-auto px-[150px]">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-xl">
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+                    <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[32px]">support_agent</span>
+                    </div>
+                    <div>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-xs">Layanan</h3>
+                        <p class="text-body text-on-surface-variant">Kepuasan penumpang adalah prioritas kami. Nikmati kemudahan dan kenyamanan layanan Juragan99.</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+                    <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[32px]">directions_bus</span>
+                    </div>
+                    <div>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-xs">Armada Handal</h3>
+                        <p class="text-body text-on-surface-variant">Kami menggunakan armada dengan keluaran terbaru. Dilengkapi dengan fitur-fitur yang akan menemani perjalanan pemudik.</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+                    <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[32px]">sell</span>
+                    </div>
+                    <div>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-xs">Harga Terbaik</h3>
+                        <p class="text-body text-on-surface-variant">Dapatkan penawaran harga terbaik dari kami. Juragan99 memberikan harga terbaik dengan layanan terbaik, sultan!</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-shadow">
+                    <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[32px]">confirmation_number</span>
+                    </div>
+                    <div>
+                        <h3 class="font-h3 text-h3 text-on-surface mb-xs">Reservasi Online</h3>
+                        <p class="text-body text-on-surface-variant">Semakin mudah untuk melakukan transaksi pembelian tiket dapat dilakukan secara online.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
 </x-layouts.passenger>
