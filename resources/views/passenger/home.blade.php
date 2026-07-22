@@ -4,12 +4,12 @@
         <div class="absolute inset-0 z-0" style="background: linear-gradient(135deg, rgba(93, 93, 93, 0.39) 0%, rgba(0, 79, 157, 0.6) 50%, rgba(0, 0, 0, 0.3) 100%), url('{{ asset('images/bus.png') }}'); background-size: cover; background-position: center;"></div>
         <div class="relative z-10 max-w-container-max mx-auto px-gutter pt-lg md:pt-xl pb-[120px] md:pb-[180px]">
             <div class="max-w-2xl">
-                <span class="inline-block bg-primary text-on-primary font-label-form text-[12px] px-sm py-1 rounded-full mb-md tracking-wider uppercase page-enter" style="--enter-delay: 80ms;">Terpercaya Sejak 1956</span>
-                <h1 class="font-h1-mobile text-[30px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold page-enter" style="--enter-delay: 180ms;">Perjalanan Aman,<br>Tiba dengan Nyaman.</h1>
-                <p class="font-body text-h3 text-inverse-on-surface opacity-80 max-w-lg page-enter" style="--enter-delay: 280ms;">Layanan transportasi antar kota Bus Akas dengan armada modern dan jadwal yang selalu tepat waktu.</p>
+                <span class="inline-block bg-primary text-on-primary font-label-form text-[12px] px-sm py-1 rounded-full mb-md tracking-wider uppercase page-enter" style="--enter-delay: 200ms;">Terpercaya Sejak 1956</span>
+                <h1 class="font-h1-mobile text-[30px] md:text-[56px] text-inverse-on-surface mb-sm leading-[1.1] font-extrabold page-enter" style="--enter-delay: 400ms;">Perjalanan Aman,<br>Tiba dengan Nyaman.</h1>
+                <p class="font-body text-h3 text-inverse-on-surface opacity-80 max-w-lg page-enter" style="--enter-delay: 600ms;">Layanan transportasi antar kota Bus Akas dengan armada modern dan jadwal yang selalu tepat waktu.</p>
             </div>
         </div>
-        <div class="relative z-20 max-w-container-max mx-auto px-gutter -mt-[100px] mb-xl page-enter" style="--enter-delay: 360ms;">
+        <div class="relative z-20 max-w-container-max mx-auto px-gutter -mt-[100px] mb-xl page-enter" style="--enter-delay: 800ms;">
             <div class="bg-surface rounded-xl shadow-[0px_8px_24px_rgba(0,0,0,0.12)] border border-outline-variant p-sm md:p-lg hover:-translate-y-1 transition-transform duration-300">
                 <div class="flex items-center gap-sm border-b border-surface-container-highest pb-sm mb-md">
                     <span class="material-symbols-outlined text-primary" aria-hidden="true">directions_bus</span>
@@ -70,7 +70,7 @@
             </div>
         </div>
     </section>
-    <section class="py-xl bg-background overflow-hidden" data-reveal style="--reveal-delay: 60ms;">
+    <section class="py-xl bg-background overflow-hidden" data-reveal style="--reveal-delay: 200ms;">
         <div class="max-w-container-max mx-auto px-gutter mb-xl">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
                 <div class="max-w-xl">
@@ -104,7 +104,7 @@
                             <a href="{{ route('schedules.index', ['from' => $route->origin_city_id, 'to' => $route->destination_city_id, 'date' => now()->addDay()->toDateString(), 'pax' => 1]) }}"
                                class="group relative flex flex-col overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest transition-all hover:shadow-lg hover:border-primary-container shrink-0 w-[320px] md:w-[380px]"
                                data-reveal
-                               style="--reveal-delay: {{ ($index % 4) * 90 }}ms;">
+                               style="--reveal-delay: {{ ($index % 4) * 200 }}ms;">
                                 <div class="aspect-[16/9] bg-primary-fixed flex items-center justify-center relative overflow-hidden">
                                     <img src="{{ asset('images/bus.png') }}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110 opacity-80" alt="Route">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 100ms;">
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 200ms;">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary text-[32px]">directions_bus</span>
                     </div>
@@ -159,7 +159,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 200ms;">
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 400ms;">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary text-[32px]">sell</span>
                     </div>
@@ -169,7 +169,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 300ms;">
+                <div class="flex flex-col gap-md p-xl bg-surface rounded-xl border border-outline-variant hover:shadow-lg transition-[transform,box-shadow] duration-300 hover:-translate-y-2" data-reveal style="--reveal-delay: 600ms;">
                     <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary text-[32px]">confirmation_number</span>
                     </div>

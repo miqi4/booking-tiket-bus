@@ -39,6 +39,19 @@
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
         .seat-btn { transition: background-color .18s ease, color .18s ease, border-color .18s ease, transform .18s ease; }
         .seat-btn:hover:not(:disabled) { transform: translateY(-1px); }
+
+        /* Animation Classes */
+        .page-enter { opacity: 0; transform: translate3d(0, 28px, 0) scale(0.985); will-change: transform, opacity; }
+        .page-ready .page-enter { animation: page-enter-fade 1200ms cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: var(--enter-delay, 0ms); }
+        [data-reveal] { opacity: 0; transform: translate3d(0, 36px, 0); transition: opacity 1000ms cubic-bezier(0.25, 1, 0.5, 1), transform 1000ms cubic-bezier(0.25, 1, 0.5, 1); transition-delay: var(--reveal-delay, 0ms); will-change: transform, opacity; }
+        [data-reveal].is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+        @keyframes page-enter-fade {
+            0% { opacity: 0; transform: translate3d(0, 28px, 0) scale(0.985); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .page-enter, [data-reveal] { opacity: 1 !important; transform: none !important; animation: none !important; transition: none !important; }
+        }
     </style>
 </head>
 <body class="bg-background text-on-background font-body text-body antialiased min-h-screen flex flex-col">
@@ -53,5 +66,36 @@
     {{ $slot }}
     @include('passenger.partials.footer')
     @stack('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const homePage = document.querySelector('[data-page-home]');
+            
+            if (prefersReducedMotion.matches) {
+                document.body.classList.add('page-ready');
+                if (homePage) {
+                    const revealItems = Array.from(homePage.querySelectorAll('[data-reveal]'));
+                    revealItems.forEach(item => item.classList.add('is-visible'));
+                }
+                return;
+            }
+
+            requestAnimationFrame(() => document.body.classList.add('page-ready'));
+
+            if (homePage) {
+                const revealItems = Array.from(homePage.querySelectorAll('[data-reveal]'));
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+                
+                revealItems.forEach(item => observer.observe(item));
+            }
+        });
+    </script>
 </body>
 </html>
